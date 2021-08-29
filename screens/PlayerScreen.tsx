@@ -1,15 +1,24 @@
+import { observer } from "mobx-react";
 import React, { FC } from "react";
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 import { Player } from "../models/Player";
 
 interface Props {
     player: Player
+    pressHandeler: Function
 }
 
-export const PlayerScreen: FC<Props> = ({ player }) => {
+const PlayerScreen: FC<Props> = ({ player, pressHandeler }) => {
     return (
-        <Text>
-            { JSON.stringify(player) }
-        </Text>
+
+        <Button
+            title={JSON.stringify(player)}
+            onPress={ () => pressHandeler(player.id)}
+        />
+        // <Text>
+        //     { JSON.stringify(player) }
+        // </Text>
     )
 }
+
+export default observer(PlayerScreen);

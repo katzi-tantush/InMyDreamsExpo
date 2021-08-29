@@ -1,17 +1,20 @@
+import { observer } from "mobx-react";
 import React, { FC } from "react";
 import { View } from "react-native";
 import { PlayerStore } from "../stores/PlayerStore";
-import { PlayerScreen } from "./PlayerScreen";
+import PlayerScreen from "./PlayerScreen";
 
 
 interface Props {
     store: PlayerStore
 }
 
-export const PlayersScreen: FC<Props> = ({ store }) => {
+const PlayersScreen: FC<Props> = ({ store }) => {
     return (
         <View>
-            {store.players.map((p, i) => (<PlayerScreen key={ i } player={ p }></PlayerScreen>)) }
+            {store.players.map((p, i) => (<PlayerScreen key={ i } player={ p } pressHandeler={ store.removePlayer }></PlayerScreen>)) }
         </View>
     )
 }
+
+export default observer(PlayersScreen)
