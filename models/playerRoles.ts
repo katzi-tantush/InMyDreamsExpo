@@ -1,0 +1,1 @@
+export const playerRoles: string[] = ['dreamer', 'feiry', 'night goblin', 'trickster'];
