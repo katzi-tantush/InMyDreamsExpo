@@ -1,12 +1,16 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import { dummyPlayers } from "../dummy-data/dummyPlayers";
 import { Player } from "../models/Player";
+import { RootStore } from "./RootStore";
 
 export class PlayerStore {
+    rootStore: RootStore;
+
     @observable
     players: Player[];
 
-    constructor() {
+    constructor(_rootStore: RootStore) {
+        this.rootStore = _rootStore;
         this.players = dummyPlayers;
         makeAutoObservable(this);
     }
@@ -23,4 +27,4 @@ export class PlayerStore {
     }
 }
 
-export const playerStore = new PlayerStore();
+export const rootStore: RootStore = new RootStore();

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import React, { FC } from "react";
 import { Button, Text } from "react-native";
-import { Player } from "../models/Player";
+import { Player } from "../../models/Player";
 
 interface Props {
     player: Player
