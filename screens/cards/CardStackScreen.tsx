@@ -4,12 +4,16 @@ import { dummyCards } from "../../dummy-data/dummyCards"
 import { Card } from "../../models/Card"
 import { CardStore } from "../../stores/CardStore"
 import { CardScreen } from "./CardScreen"
+import * as ScreenOrientation from 'expo-screen-orientation';
+
 
 interface Props{
     cardStore: CardStore;
 }
 
 export const CardStackScreen: FC<Props> = ({ cardStore }) => {
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+
     cardStore.setCards(dummyCards);
     cardStore.setCurrentCard();
     const { currentCard } = cardStore;
