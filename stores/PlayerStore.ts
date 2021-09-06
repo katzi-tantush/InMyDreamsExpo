@@ -25,6 +25,12 @@ export class PlayerStore {
         this.players = this.players.filter(p => p.id != id);
         console.log(this.players);
     }
+
+    @action
+    editPlayer = (id: number, edittedName: string) => {
+        let player: Player = this.players.find(p => p.id == id) as Player;
+        player.name = edittedName;
+    }
 }
 
 export const rootStore: RootStore = new RootStore();

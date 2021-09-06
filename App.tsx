@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { CardStackScreen } from './screens/cards/CardStackScreen';
-import PlayersScreen from './screens/player/PlayersScreen';
+import { HomeScreen } from './screens/HomeScreen';
+import { NewGameInitScreen } from './screens/game-init/NewGameInitScreen';
 import { rootStore } from './stores/PlayerStore';
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
   const store = rootStore;
+  const { cardStore, gameStore } = store;
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-      <CardStackScreen cardStore={ store.cardStore }></CardStackScreen>
-      {/* <PlayersScreen store={ store }></PlayersScreen> */}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name='home'
+          component={HomeScreen}
+        />
+        <Stack.Screen
+          name='new game init'
+        >
+          {props => <NewGameInitScreen store={ store }/>}
+        </Stack.Screen>
+        
+
+            {/* <CardStackScreen cardStore={ cardStore } gameStore={ gameStore }></CardStackScreen> */}
+            {/* <HomeScreen></HomeScreen> */}
+            {/* <PlayersScreen store={ store }></PlayersScreen> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

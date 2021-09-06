@@ -8,10 +8,11 @@ export class Player {
     score: number;
     
     @observable
-    role?: string;
+    role: string;
 
-    constructor(_id: number, _name?:string) {
+    constructor(_id: number, _role:string, _name?:string) {
         this.id = _id;
+        this.role = _role;
         this.name = _name ? _name : 'unnamed player';
         this.score = 0;
     }

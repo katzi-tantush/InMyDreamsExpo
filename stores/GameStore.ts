@@ -1,4 +1,6 @@
 import { action, makeAutoObservable, observable } from "mobx";
+import { dummyPlayers } from "../dummy-data/dummyPlayers";
+import { Card } from "../models/Card";
 import { GameRound } from "../models/GameRound";
 import { RootStore } from "./RootStore";
 
@@ -15,6 +17,10 @@ export class GameStore{
         this.rootStore = _rootStore;
         this.gameRounds = [];
 
+        // test gameRoundInit:
+        const [dreamer, fairy, nightGoblin, trickster] = dummyPlayers;
+        this.currentGameRound = new GameRound(dreamer.id, [fairy.id], [nightGoblin.id], [trickster.id]);
+
         makeAutoObservable(this);
     }
 
@@ -29,7 +35,16 @@ export class GameStore{
     }
 
     @action
-    commitCard = (correct: boolean) => {
+    commitCard = (correct: boolean, card: Card) => {
+        let { correctCards, incorrectCards } = this.currentGameRound as GameRound;
 
+        if (correct) {
+            correctCards = [...correctCards, card];
+            console.log(correctCards);
+        }
+        else {
+            incorrectCards = [...incorrectCards, card];
+            console.log(incorrectCards);
+        }
     }
 }
