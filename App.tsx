@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { HomeScreen } from './screens/HomeScreen';
 import { NewGameInitScreen } from './screens/game-init/NewGameInitScreen';
-import { rootStore } from './stores/PlayerStore';
+import { rootStore } from './stores/domain-stores/PlayerStore';
 
 export default function App() {
   const Stack = createNativeStackNavigator();

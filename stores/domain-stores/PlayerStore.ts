@@ -1,7 +1,7 @@
 import { action, makeAutoObservable, observable } from "mobx";
-import { dummyPlayers } from "../dummy-data/dummyPlayers";
-import { Player } from "../models/Player";
-import { RootStore } from "./RootStore";
+import { dummyPlayers } from "../../dummy-data/dummyPlayers";
+import { Player } from "../../models/Player";
+import { RootStore } from "../RootStore";
 
 export class PlayerStore {
     rootStore: RootStore;
@@ -22,8 +22,13 @@ export class PlayerStore {
 
     @action
     removePlayer = (id: number) => {
-        this.players = this.players.filter(p => p.id != id);
-        console.log(this.players);
+        console.log(`id: ${id}`);
+        
+        console.log(`players lst before filter: ${JSON.stringify(this.players)}`);
+        console.log(`player to remove: ${JSON.stringify(this.players.find(p => p.id == id))}`);
+        
+        this.players = [...this.players.filter(p => p.id !== id)];
+        console.log(`players lst after filter: ${JSON.stringify(this.players)}`);
     }
 
     @action

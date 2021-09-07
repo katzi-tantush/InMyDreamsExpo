@@ -8,12 +8,13 @@ interface Props{
 }
 
 export const NewGameInitScreen: FC<Props> = ({ store }) => {
-    const { playerStore } = store;
+    const { playerStore, playerUiStore } = store;
 
-    return(
+    return (
         <View>
             <PlayersInitScreen
-                playerStore={ playerStore }
+                playerStore={playerStore}
+                playerUiStore={playerUiStore}
             />
             {/* 
             add players:

@@ -1,8 +1,8 @@
 import { action, makeAutoObservable, observable } from "mobx";
-import { dummyPlayers } from "../dummy-data/dummyPlayers";
-import { Card } from "../models/Card";
-import { GameRound } from "../models/GameRound";
-import { RootStore } from "./RootStore";
+import { dummyPlayers } from "../../dummy-data/dummyPlayers";
+import { Card } from "../../models/Card";
+import { GameRound } from "../../models/GameRound";
+import { RootStore } from "../RootStore";
 
 export class GameStore{
     rootStore: RootStore;

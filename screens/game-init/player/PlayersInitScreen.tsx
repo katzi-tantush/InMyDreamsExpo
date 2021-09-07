@@ -1,30 +1,44 @@
 import { observer } from "mobx-react";
 import React, { FC } from "react";
 import { View } from "react-native";
-import { PlayerStore } from "../../../stores/PlayerStore";
+import { PlayerStore } from "../../../stores/domain-stores/PlayerStore";
 import { RootStore } from "../../../stores/RootStore";
-import PlayerInitedScreen from "./PlayerInitedScreen";
-
+import { PlayerUiStore } from "../../../stores/ui-stores/PlayerUiStore";
+import ExistingPlayerFormField from "./ExistingPlayerFormField";
+import InitedPlayerScreen from "./InitedPlayerScreen";
 
 interface Props {
     playerStore: PlayerStore
+    playerUiStore: PlayerUiStore
 }
 
-const PlayersInitScreen: FC<Props> = ({ playerStore }) => {
+const PlayersInitScreen: FC<Props> = ({ playerStore, playerUiStore }) => {
     const { 
         removePlayer, 
         editPlayer,
         players
     } = playerStore;
 
+    const {
+        setBeingEdittedId,
+        beingEdittedId
+    } = playerUiStore;
+
+
     return (
         <View>
             {players.map((p, i) => (
-                <PlayerInitedScreen
-                    key={ i } 
-                    player={ p } 
-                    removeHandeler={removePlayer}
-                    editHandeler={editPlayer}
+                // <InitedPlayerScreen
+                //     key={i}
+                //     player={p}
+                //     editHandeler={editPlayer}
+                //     removeHandeler={removePlayer}
+                // />
+                <ExistingPlayerFormField
+                    key={i}
+                    player={p}
+                    editNameHandeler={editPlayer}
+                    removePlayerHandeler={removePlayer}
                 />
             ))}
         </View>

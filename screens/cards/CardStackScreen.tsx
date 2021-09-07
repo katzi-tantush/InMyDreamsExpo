@@ -2,11 +2,11 @@ import React, { FC } from "react"
 import { View, Text } from "react-native"
 import { dummyCards } from "../../dummy-data/dummyCards"
 import { Card } from "../../models/Card"
-import { CardStore } from "../../stores/CardStore"
+import { CardStore } from "../../stores/domain-stores/CardStore"
 import { CardScreen } from "./CardScreen"
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { CardSwipeBtn } from "./CardSwipeBtn"
-import { GameStore } from "../../stores/GameStore"
+import { GameStore } from "../../stores/domain-stores/GameStore"
 
 
 interface Props{

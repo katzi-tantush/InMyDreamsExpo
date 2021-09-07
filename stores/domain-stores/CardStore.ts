@@ -1,7 +1,7 @@
 import { action, makeAutoObservable, observable } from "mobx";
-import { Card } from "../models/Card";
-import { Utils } from "../Utils/Utils";
-import { RootStore } from "./RootStore";
+import { Card } from "../../models/Card";
+import { Utils } from "../../Utils/Utils";
+import { RootStore } from "../RootStore";
 
 export class CardStore{
     rootStore: RootStore;
