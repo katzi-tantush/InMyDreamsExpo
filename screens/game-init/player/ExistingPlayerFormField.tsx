@@ -25,18 +25,12 @@ const ExistingPlayerFormField: FC<Props> = ({
                 onChangeText={(text) => {
                     setnameValue(text);
                     editNameHandeler(id, nameValue);
-                    console.log(`event text: ${nameValue}`);
                 }}
             />
             <Button
                 title='Remove Player'
-                onPress={() => {
-                    console.log(`in player edit - id: ${id}`);
-                    
-                    removePlayerHandeler(id)
-                }}
+                onPress={() => {removePlayerHandeler(id)}}
             />
-
         </View>
     )
 }

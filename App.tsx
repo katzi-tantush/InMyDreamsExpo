@@ -3,8 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { HomeScreen } from './screens/HomeScreen';
-import { NewGameInitScreen } from './screens/game-init/NewGameInitScreen';
 import { rootStore } from './stores/domain-stores/PlayerStore';
+import { StoreProvider } from './context/StoreProvider';
+import NewGameInitScreen from './screens/game-init/NewGameInitScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -13,24 +14,24 @@ export default function App() {
   const { cardStore, gameStore } = store;
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='home'
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          name='new game init'
-        >
-          {props => <NewGameInitScreen store={ store }/>}
-        </Stack.Screen>
-        
+    <StoreProvider store={rootStore}>
 
-            {/* <CardStackScreen cardStore={ cardStore } gameStore={ gameStore }></CardStackScreen> */}
-            {/* <HomeScreen></HomeScreen> */}
-            {/* <PlayersScreen store={ store }></PlayersScreen> */}
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator>
+
+          <Stack.Screen
+            name='home'
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            name='new game init'
+            component={NewGameInitScreen}
+          />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+      
+    </StoreProvider>
   );
 }
 

@@ -10,10 +10,10 @@ export class Player {
     @observable
     role: string;
 
-    constructor(_id: number, _role:string, _name?:string) {
+    constructor(_id: number, _name?:string) {
         this.id = _id;
-        this.role = _role;
-        this.name = _name ? _name : 'unnamed player';
+        this.name = _name ? _name : `unnamed player ${_id}`;
+        this.role = '';
         this.score = 0;
     }
 }
