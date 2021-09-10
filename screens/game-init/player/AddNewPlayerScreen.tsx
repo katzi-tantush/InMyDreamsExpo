@@ -21,8 +21,12 @@ const [newPlayerName, setNewPlayerName] = useState('')
                     console.log(`in AddNewPlayerScreen - newPlayerName: ${newPlayerName}`);
                     
                     addPlayerHandeler(newPlayerName)
-                    // setNewPlayerName('');
+                    setNewPlayerName('');
                 }}
+            />
+            <Button
+                title='Start Game'
+                onPress={() => {}}
             />
         </View>
     )
