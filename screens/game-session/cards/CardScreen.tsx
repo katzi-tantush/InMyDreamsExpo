@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { Text } from "react-native"
-import { Card } from "../../models/Card"
+import { Card } from "../../../models/Card"
 
 interface Props{
     card: Card;

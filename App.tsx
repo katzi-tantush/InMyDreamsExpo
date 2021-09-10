@@ -1,33 +1,37 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { HomeScreen } from './screens/HomeScreen';
+import { StyleSheet } from 'react-native';
 import { rootStore } from './stores/domain-stores/PlayerStore';
 import { StoreProvider } from './context/StoreProvider';
-import NewGameInitScreen from './screens/game-init/NewGameInitScreen';
+import screenNavigations from './navigation/screenNavigation';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
 
-  const store = rootStore;
-  const { cardStore, gameStore } = store;
+  const { homeNav, gameInitNav, cardStackNav } = screenNavigations;
+  console.log(`in App - screenNavigations: ${JSON.stringify(screenNavigations)}`);
+  
+  // const store = rootStore;
+  // const { cardStore, gameStore } = store;
 
   return (
     <StoreProvider store={rootStore}>
 
       <NavigationContainer>
         <Stack.Navigator>
-
           <Stack.Screen
-            name='home'
-            component={HomeScreen}
+            name={homeNav.name}
+            component={homeNav.component}
           />
           <Stack.Screen
-            name='new game init'
-            component={NewGameInitScreen}
+            name={gameInitNav.name}
+            component={gameInitNav.component}
           />
-
+          <Stack.Screen
+            name={cardStackNav.name}
+            component={cardStackNav.component}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       

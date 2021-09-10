@@ -24,10 +24,6 @@ const [newPlayerName, setNewPlayerName] = useState('')
                     setNewPlayerName('');
                 }}
             />
-            <Button
-                title='Start Game'
-                onPress={() => {}}
-            />
         </View>
     )
 }

@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 import { Button, Text, View } from "react-native";
+import screenNavigations from "../navigation/screenNavigation";
 
 interface Props{
     navigation: any
 }
 
 export const HomeScreen: FC<Props> = ({ navigation }) => {
+    const { gameInitNav } = screenNavigations;
+
     return (
         <View>
             <Text>
@@ -13,7 +16,7 @@ export const HomeScreen: FC<Props> = ({ navigation }) => {
             </Text>
             <Button
                 title='To Game Init Screen'
-                onPress={() => { navigation.navigate('new game init') }} />
+                onPress={() => { navigation.navigate(gameInitNav.name) }} />
         </View>
     )
 }
