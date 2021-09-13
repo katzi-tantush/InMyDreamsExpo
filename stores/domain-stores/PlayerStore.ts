@@ -1,6 +1,7 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
 import { dummyPlayers } from "../../dummy-data/dummyPlayers";
 import { Player } from "../../models/Player";
+import { Utils } from "../../Utils/Utils";
 import { RootStore } from "../RootStore";
 
 export class PlayerStore {
@@ -17,17 +18,17 @@ export class PlayerStore {
     }
 
     @action
-    addPlayer = (newPlayer: Player) => {
-        this.players = [...this.players, newPlayer];
-    }
-
-    @action
     setPlayers = (newPlayersArr: Player[]) => {
         console.log(`in setPlayers - newPlayersArr: ${JSON.stringify(newPlayersArr)}`);
         
         this.players = [...newPlayersArr];
         console.log(`in setPlayers - players (store):${JSON.stringify(this.players)}`);
         
+    }
+
+    @action
+    addPlayer = (newPlayer: Player) => {
+        this.players = [...this.players, newPlayer];
     }
 
     @action
@@ -68,6 +69,13 @@ export class PlayerStore {
             const newPlayer: Player = new Player(newId, newPlayerName);
             this.addPlayer(newPlayer);
         }
+    }
+
+    @action
+    initRoundRoles = (playersArr: Player[], dreamerId: number) => {
+        const newRoundPlayers: Player[] = Utils.setRoles(this.players, dreamerId);
+
+        this.setPlayers([...newRoundPlayers]);
     }
 }
 

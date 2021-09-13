@@ -11,10 +11,6 @@ import ExistingPlayerFormField from "./ExistingPlayerFormField";
 
 // const PlayersInitScreen: FC<Props> = ({ playerStore }) => {
 const PlayersInitScreen: FC = () => {
-    console.log('PlayersInitScreen has will now render');
-    
-    // const [componentPlayers, setcomponentPlayers] = useState(players)
-
     const { playerStore } = useStore();
     
     const { 

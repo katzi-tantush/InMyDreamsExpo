@@ -7,18 +7,20 @@ import { CardScreen } from "./CardScreen"
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { CardSwipeBtn } from "./CardSwipeBtn"
 import { GameStore } from "../../../stores/domain-stores/GameStore"
+import { useStore } from "../../../context/StoreProvider"
 
 
 interface Props{
-    cardStore: CardStore;
-    gameStore: GameStore;
 }
 
-export const CardStackScreen: FC<Props> = ({ cardStore, gameStore }) => {
+export const CardStackScreen: FC = () => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    const { playerStore, cardStore, gameStore } = useStore();
 
-    cardStore.setCards(dummyCards);
-    cardStore.setCurrentCard();
+    // debug
+    // console.log(`players after init in CradStackScreen - players: ${JSON.stringify(playerStore.players)}`);
+    
+
     const { currentCard, removeCard } = cardStore;
     const { commitCard } = gameStore;
 

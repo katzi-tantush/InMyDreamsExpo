@@ -1,4 +1,5 @@
 import { action, makeAutoObservable, observable } from "mobx";
+import { dummyCards } from "../../dummy-data/dummyCards";
 import { Card } from "../../models/Card";
 import { Utils } from "../../Utils/Utils";
 import { RootStore } from "../RootStore";
@@ -15,6 +16,10 @@ export class CardStore{
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
 
+        // dev:
+        this.setCards(dummyCards);
+        this.setCurrentCard();
+
         makeAutoObservable(this);
     }
 
@@ -26,13 +31,13 @@ export class CardStore{
     @action
     setCurrentCard = () => {
         if (this.cards != undefined && this.cards?.length > 0) {
-            this.currentCard = Utils.randomElement(this.cards);
+            this.currentCard = Utils.getRandomElement(this.cards);
         }
     }
 
     @action
     removeCard = (id:number) => {
-        this.cards = this.cards?.filter(c => c.id != id);
+        this.cards = [...(this.cards as Card[]).filter(c => c.id != id)];
         this.setCurrentCard();
     }
 }
