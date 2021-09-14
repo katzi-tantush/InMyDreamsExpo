@@ -17,7 +17,7 @@ export class GameStore{
         this.rootStore = _rootStore;
         this.gameRounds = [];
 
-        // test gameRoundInit:
+        //TODO: remove whn done with dev: test gameRoundInit:
         const [dreamer, fairy, nightGoblin, trickster] = dummyPlayers;
         this.currentGameRound = new GameRound(dreamer.id, [fairy.id], [nightGoblin.id], [trickster.id]);
 
@@ -40,11 +40,11 @@ export class GameStore{
 
         if (correct) {
             correctCards = [...correctCards, card];
-            console.log(correctCards);
+            console.log(`in GameStore - correct cards: ${JSON.stringify(correctCards)}`);
         }
         else {
             incorrectCards = [...incorrectCards, card];
-            console.log(incorrectCards);
+            console.log(`in GameStore - in-correct cards: ${JSON.stringify(incorrectCards)}`);
         }
     }
 }

@@ -10,7 +10,6 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   const { homeNav, gameInitNav, cardStackNav } = screenNavigations;
-  console.log(`in App - screenNavigations: ${JSON.stringify(screenNavigations)}`);
   
   // const store = rootStore;
   // const { cardStore, gameStore } = store;

@@ -1,46 +1,58 @@
-import React, { FC } from "react"
-import { View, Text } from "react-native"
-import { dummyCards } from "../../../dummy-data/dummyCards"
+import React, { FC, useEffect } from "react"
+import { View, Text, Button } from "react-native"
 import { Card } from "../../../models/Card"
-import { CardStore } from "../../../stores/domain-stores/CardStore"
 import { CardScreen } from "./CardScreen"
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { CardSwipeBtn } from "./CardSwipeBtn"
-import { GameStore } from "../../../stores/domain-stores/GameStore"
 import { useStore } from "../../../context/StoreProvider"
+import { observer } from "mobx-react-lite";
 
 
 interface Props{
 }
 
-export const CardStackScreen: FC = () => {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+const CardStackScreen: FC = () => {
+    // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const { playerStore, cardStore, gameStore } = useStore();
-
-    // debug
-    // console.log(`players after init in CradStackScreen - players: ${JSON.stringify(playerStore.players)}`);
     
-
-    const { currentCard, removeCard } = cardStore;
+    const {
+        currentCard, 
+        removeCard, 
+    } = cardStore;
+    
     const { commitCard } = gameStore;
+    
+    //TODO: test that portrait is enforced when leaving this screen
+    // and that landscape is enforced when rendering
+    useEffect(() => {
+        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        return () => {
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+        }
+    }, [])
 
     if (currentCard)
     return (
         <View>
-            <CardScreen card={cardStore.currentCard as Card}></CardScreen>
-            <CardSwipeBtn
-                resulTitle='correct'
-                resultAction={() => commitCard(true, currentCard)}
-                removeCardFunction={ () => removeCard(currentCard.id) }
+            <CardScreen card={currentCard as Card}></CardScreen>
+            <Button
+                title='swipte right - correct'
+                onPress={() => {
+                    commitCard(true, currentCard);
+                    removeCard(currentCard.id);
+                }}
             />
-            <CardSwipeBtn
-                resulTitle='in-correct' 
-                resultAction={ () => commitCard(false, currentCard)} 
-                removeCardFunction={ () => removeCard(currentCard.id) } 
+            <Button
+                title='swipte left - incorrect'
+                onPress={() => {
+                    commitCard(false, currentCard);
+                    removeCard(currentCard.id);
+                }}
             />
-            <CardSwipeBtn 
-            resulTitle='pass' 
-            removeCardFunction={ () => removeCard(currentCard.id) }
+            <Button
+                title='swipte up - pass'
+                onPress={() => {
+                    removeCard(currentCard.id);
+                }}
             />
         </View>
         )
@@ -48,3 +60,5 @@ export const CardStackScreen: FC = () => {
         <Text> No cards left! </Text>
     )
 }
+
+export default observer(CardStackScreen);

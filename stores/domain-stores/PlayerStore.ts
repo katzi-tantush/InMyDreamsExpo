@@ -19,11 +19,7 @@ export class PlayerStore {
 
     @action
     setPlayers = (newPlayersArr: Player[]) => {
-        console.log(`in setPlayers - newPlayersArr: ${JSON.stringify(newPlayersArr)}`);
-        
         this.players = [...newPlayersArr];
-        console.log(`in setPlayers - players (store):${JSON.stringify(this.players)}`);
-        
     }
 
     @action
@@ -50,10 +46,7 @@ export class PlayerStore {
 
     @action
     requestAddPlayer = (newPlayerName: string) => {
-        console.log(`in playerStores requestAddPlayer - newPlayerName: ${newPlayerName}`);
-        
         const unTakenPlayerName: boolean = this.players.every(p => p.name != newPlayerName);
-        console.log(`in playerStores requestAddPlayer - unTakenPlayerName: ${unTakenPlayerName}`);
 
         if (newPlayerName == '') {
             // implement bad name msg

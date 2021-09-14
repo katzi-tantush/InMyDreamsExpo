@@ -18,8 +18,6 @@ const [newPlayerName, setNewPlayerName] = useState('')
             <Button
                 title='Add New Player'
                 onPress={() => {
-                    console.log(`in AddNewPlayerScreen - newPlayerName: ${newPlayerName}`);
-                    
                     addPlayerHandeler(newPlayerName)
                     setNewPlayerName('');
                 }}
