@@ -13,8 +13,17 @@ export class CardStore{
     @observable
     currentCard?: Card;
 
+    @observable
+    correctCards: Card[]
+
+    @observable
+    incorrectCards: Card[]
+
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
+
+        this.correctCards = [];
+        this.incorrectCards = [];
 
         // dev:
         this.setCards(dummyCards);
@@ -38,6 +47,18 @@ export class CardStore{
     @action
     removeCard = (id:number) => {
         this.cards = [...(this.cards as Card[]).filter(c => c.id != id)];
+        this.setCurrentCard();
+    }
+
+    @action
+    commitCard = (correct?: boolean) => {
+        if (correct === true) {
+            this.correctCards = [...this.correctCards, this.currentCard!];
+        }
+        if (correct === false) {
+            this.incorrectCards = [...this.incorrectCards, this.currentCard!];
+        }
+        this.removeCard(this.currentCard?.id!);
         this.setCurrentCard();
     }
 }

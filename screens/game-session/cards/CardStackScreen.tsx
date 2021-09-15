@@ -5,24 +5,22 @@ import { CardScreen } from "./CardScreen"
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useStore } from "../../../context/StoreProvider"
 import { observer } from "mobx-react-lite";
+import TimerScreen from "../../TimerScreen";
 
 
 interface Props{
 }
 
 const CardStackScreen: FC = () => {
-    // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    const { playerStore, cardStore, gameStore } = useStore();
+    const { cardStore } = useStore();
     
     const {
         currentCard, 
-        removeCard, 
+        commitCard, 
     } = cardStore;
     
-    const { commitCard } = gameStore;
-    
-    //TODO: test that portrait is enforced when leaving this screen
-    // and that landscape is enforced when rendering
+    // when entering this screen - lock to landscape
+    // when exiting - lock to portrait
     useEffect(() => {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
         return () => {
@@ -35,25 +33,18 @@ const CardStackScreen: FC = () => {
         <View>
             <CardScreen card={currentCard as Card}></CardScreen>
             <Button
-                title='swipte right - correct'
-                onPress={() => {
-                    commitCard(true, currentCard);
-                    removeCard(currentCard.id);
-                }}
+                title='swipe right - correct'
+                onPress={() => commitCard(true)}
             />
             <Button
-                title='swipte left - incorrect'
-                onPress={() => {
-                    commitCard(false, currentCard);
-                    removeCard(currentCard.id);
-                }}
+                title='swipe left - incorrect'
+                onPress={() => commitCard(false)}
             />
             <Button
-                title='swipte up - pass'
-                onPress={() => {
-                    removeCard(currentCard.id);
-                }}
+                title='swipe up - pass'
+                onPress={() => commitCard()}
             />
+            <TimerScreen/>
         </View>
         )
     return (

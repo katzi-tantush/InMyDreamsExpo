@@ -11,9 +11,6 @@ export default function App() {
 
   const { homeNav, gameInitNav, cardStackNav } = screenNavigations;
   
-  // const store = rootStore;
-  // const { cardStore, gameStore } = store;
-
   return (
     <StoreProvider store={rootStore}>
 
