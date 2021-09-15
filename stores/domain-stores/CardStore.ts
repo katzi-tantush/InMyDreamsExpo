@@ -13,12 +13,21 @@ export class CardStore{
     @observable
     currentCard?: Card;
 
+    @observable
+    correctCards: Card[];
+
+    @observable
+    inCorrectCards: Card[];
+
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
 
         // dev:
         this.setCards(dummyCards);
         this.setCurrentCard();
+
+        this.correctCards = [];
+        this.inCorrectCards = [];
 
         makeAutoObservable(this);
     }
@@ -39,5 +48,12 @@ export class CardStore{
     removeCard = (id:number) => {
         this.cards = [...(this.cards as Card[]).filter(c => c.id != id)];
         this.setCurrentCard();
+    }
+
+    @action
+    commitCard = (correct?: boolean, currentCard?: Card) => {
+        if (correct === true) this.correctCards = [...this.correctCards, currentCard!];
+        if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
+        this.removeCard(currentCard?.id!)
     }
 }

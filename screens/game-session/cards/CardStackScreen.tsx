@@ -12,17 +12,13 @@ interface Props{
 
 const CardStackScreen: FC = () => {
     // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    const { playerStore, cardStore, gameStore } = useStore();
+    const { cardStore } = useStore();
     
     const {
         currentCard, 
-        removeCard, 
+        commitCard
     } = cardStore;
     
-    const { commitCard } = gameStore;
-    
-    //TODO: test that portrait is enforced when leaving this screen
-    // and that landscape is enforced when rendering
     useEffect(() => {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
         return () => {
@@ -38,20 +34,18 @@ const CardStackScreen: FC = () => {
                 title='swipte right - correct'
                 onPress={() => {
                     commitCard(true, currentCard);
-                    removeCard(currentCard.id);
                 }}
             />
             <Button
                 title='swipte left - incorrect'
                 onPress={() => {
                     commitCard(false, currentCard);
-                    removeCard(currentCard.id);
                 }}
             />
             <Button
                 title='swipte up - pass'
                 onPress={() => {
-                    removeCard(currentCard.id);
+                    commitCard();
                 }}
             />
         </View>
