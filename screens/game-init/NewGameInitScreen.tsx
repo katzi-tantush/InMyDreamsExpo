@@ -12,7 +12,7 @@ interface Props{
 }
 
 const NewGameInitScreen: FC<Props> = ({ navigation }) => {
-    const { cardStackNav } = screenNavigations;
+    const { gameRoundNav } = screenNavigations;
     const { playerStore } = useStore();
     const { players,initRoundRoles } = playerStore;
     const dreamerId: number = (Utils.getRandomElement(players) as Player).id;
@@ -24,7 +24,7 @@ const NewGameInitScreen: FC<Props> = ({ navigation }) => {
                 title='Start Game'
                 onPress={() => {
                     initRoundRoles(players, dreamerId);
-                    navigation.navigate(cardStackNav.name);
+                    navigation.navigate(gameRoundNav.name);
                 }}
             />
 

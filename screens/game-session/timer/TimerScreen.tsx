@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react"
 import { View, Text, Button } from "react-native"
-import TimerFormattedTime from "../../interfaces/TimerFormattedTime";
+import TimerFormattedTime from "../../../interfaces/TimerFormattedTime";
 import TimerDisplay from "./TimeDisplay";
 
 const TimerScreen: FC = () => {

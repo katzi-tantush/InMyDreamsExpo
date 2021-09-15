@@ -5,7 +5,6 @@ import { CardScreen } from "./CardScreen"
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useStore } from "../../../context/StoreProvider"
 import { observer } from "mobx-react-lite";
-import TimerScreen from "../../timer/TimerScreen";
 
 
 interface Props{
@@ -49,7 +48,6 @@ const CardStackScreen: FC = () => {
                     commitCard();
                 }}
             />
-            <TimerScreen/>
         </View>
         )
     return (

@@ -1,6 +1,6 @@
-import { Component } from "react";
 import NewGameInitScreen from "../screens/game-init/NewGameInitScreen";
 import CardStackScreen from "../screens/game-session/cards/CardStackScreen";
+import GameRoundScreen from "../screens/game-session/GameRoundScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 
 const screenNavigations = {
@@ -15,6 +15,10 @@ const screenNavigations = {
     cardStackNav: {
         name: 'cardStack',
         component: CardStackScreen
+    },
+    gameRoundNav: {
+        name: 'gameRound',
+        component: GameRoundScreen
     },
 }
 

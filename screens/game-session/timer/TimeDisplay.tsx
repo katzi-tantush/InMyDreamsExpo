@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { View, Text } from "react-native"
-import TimerFormattedTime from "../../interfaces/TimerFormattedTime";
+import TimerFormattedTime from "../../../interfaces/TimerFormattedTime";
 
 interface Props {
     formattedTime: TimerFormattedTime
