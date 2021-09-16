@@ -9,14 +9,27 @@ import screenNavigations from './navigation/screenNavigation';
 export default function App() {
   const Stack = createNativeStackNavigator();
 
-  const { homeNav, gameInitNav, gameRoundNav } = screenNavigations;
+  const {
+    homeNav,
+    gameInitNav,
+    gameRoundNav,
+    playersRoleNav,
+    cardStackNav
+  } = screenNavigations;
   
   return (
     <StoreProvider store={rootStore}>
 
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
+          {
+            Object.values(screenNavigations).map(screenNav => <Stack.Screen
+              key={screenNav.name}
+              name={screenNav.name}
+              component={screenNav.component}
+            />)
+          }
+          {/* <Stack.Screen
             name={homeNav.name}
             component={homeNav.component}
           />
@@ -28,6 +41,16 @@ export default function App() {
             name={gameRoundNav.name}
             component={gameRoundNav.component}
           />
+          <Stack.Screen
+            name={playersRoleNav.name}
+            
+            component={playersRoleNav.component}
+          />
+          <Stack.Screen
+            name={cardStackNav.name}
+
+            component={cardStackNav.component}
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
       

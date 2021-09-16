@@ -5,29 +5,24 @@ import { useStore } from "../../context/StoreProvider"
 import { Player } from "../../models/Player"
 import screenNavigations from "../../navigation/screenNavigation"
 import { Utils } from "../../Utils/Utils"
-import PlayersInitScreen from "./player/PlayersInitScreen"
+import PlayersInitScreen from "./player-init/PlayersInitScreen"
 
 interface Props{
     navigation: any
 }
 
 const NewGameInitScreen: FC<Props> = ({ navigation }) => {
-    const { gameRoundNav } = screenNavigations;
-    const { playerStore } = useStore();
-    const { players,initRoundRoles } = playerStore;
-    const dreamerId: number = (Utils.getRandomElement(players) as Player).id;
-
+    const { playersRoleNav } = screenNavigations;
+    
     return (
         <View>
             <PlayersInitScreen />
             <Button
-                title='Start Game'
+                title='To Player Roles'
                 onPress={() => {
-                    initRoundRoles(players, dreamerId);
-                    navigation.navigate(gameRoundNav.name);
+                    navigation.navigate(playersRoleNav.name);
                 }}
             />
-
         </View>
     )
 }

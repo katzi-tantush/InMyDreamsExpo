@@ -17,25 +17,31 @@ export class PlayerStore {
         makeAutoObservable(this);
     }
 
+    @computed
+    dreamerIsSet = (): boolean => {
+        let dreamer: Player | undefined = this.players.find(p => p.role == 'dreamer');
+        return dreamer ? true : false;
+    }
+
     @action
     setPlayers = (newPlayersArr: Player[]) => {
         this.players = [...newPlayersArr];
     }
 
     @action
-    addPlayer = (newPlayer: Player) => {
+    private addPlayer = (newPlayer: Player) => {
         this.players = [...this.players, newPlayer];
+    }
+
+    @action
+    removePlayer = (id: number) => {
+        this.players = [...this.getIdFilteredPlayers(id)]
     }
 
     @action
     editPlayer = (id: number, edittedName: string) => {
         let player: Player = this.players.find(p => p.id == id) as Player;
         player.name = edittedName;
-    }
-
-    @action
-    removePlayer = (id: number) => {
-        this.players = [...this.getIdFilteredPlayers(id)]
     }
 
     @computed
@@ -65,10 +71,24 @@ export class PlayerStore {
     }
 
     @action
-    initRoundRoles = (playersArr: Player[], dreamerId: number) => {
+    emptyRoles = () => {
+        let emptyRolePlayers: Player[] = this.players.map(p => {
+            let emptyRolePlayer: Player = p;
+            emptyRolePlayer.role = '';
+            return emptyRolePlayer;
+        });
+        
+        
+        this.setPlayers([...emptyRolePlayers]);
+    }
+    
+    @action
+    initRoundRoles = (dreamerId: number) => {
+        this.emptyRoles();
         const newRoundPlayers: Player[] = Utils.setRoles(this.players, dreamerId);
-
+        
         this.setPlayers([...newRoundPlayers]);
+        console.log(`in playerStore, initRoundRoles - players: ${JSON.stringify(this.players)}`);
     }
 }
 
