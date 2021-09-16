@@ -19,6 +19,9 @@ export class CardStore{
     @observable
     inCorrectCards: Card[];
 
+    @observable
+    allowCardCommit: boolean;
+
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
 
@@ -26,10 +29,16 @@ export class CardStore{
         this.setCards(dummyCards);
         this.setCurrentCard();
 
+        this.allowCardCommit = false;
         this.correctCards = [];
         this.inCorrectCards = [];
 
         makeAutoObservable(this);
+    }
+
+    @action
+    setAllowCardCommit = (shouldCommitBeAllowed:boolean) => {
+        this.allowCardCommit = shouldCommitBeAllowed;
     }
 
     @action
@@ -52,8 +61,13 @@ export class CardStore{
 
     @action
     commitCard = (correct?: boolean, currentCard?: Card) => {
-        if (correct === true) this.correctCards = [...this.correctCards, currentCard!];
-        if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
-        this.removeCard(currentCard?.id!)
+        if (this.allowCardCommit) {
+            if (correct === true) this.correctCards = [...this.correctCards, currentCard!];
+            if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
+            this.removeCard(currentCard?.id!)
+        }
+        else {
+            // implement start timer popup
+        }
     }
 }

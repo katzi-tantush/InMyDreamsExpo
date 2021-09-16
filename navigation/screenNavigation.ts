@@ -1,5 +1,4 @@
 import NewGameInitScreen from "../screens/game-init/NewGameInitScreen";
-import CardStackScreen from "../screens/game-session/cards/CardStackScreen";
 import GameRoundScreen from "../screens/game-session/GameRoundScreen";
 import PlayersRoleScreen from "../screens/game-session/player-role/PlayersRoleScreen";
 import { HomeScreen } from "../screens/HomeScreen";
@@ -10,19 +9,15 @@ const screenNavigations = {
         component: HomeScreen
     },
     gameInitNav: {
-        name: 'gameInit',
+        name: 'game init',
         component: NewGameInitScreen
     },
-    cardStackNav: {
-        name: 'cardStack',
-        component: CardStackScreen
-    },
     gameRoundNav: {
-        name: 'gameRound',
+        name: 'game round screen',
         component: GameRoundScreen
     },
-    playersRoleNav: {
-        name: 'playersRole',
+    playerRolesNav: {
+        name: 'player roles',
         component: PlayersRoleScreen
     }
 }

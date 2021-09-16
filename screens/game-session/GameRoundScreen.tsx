@@ -4,7 +4,11 @@ import { View } from "react-native"
 import CardStackScreen from "./cards/CardStackScreen"
 import TimerScreen from "./timer/TimerScreen"
 
-const GameRoundScreen: FC = () => {
+interface Props {
+    navigation: any;
+}
+
+const GameRoundScreen: FC<Props> = ({ navigation }) => {
     return (
         <View>
             <CardStackScreen />

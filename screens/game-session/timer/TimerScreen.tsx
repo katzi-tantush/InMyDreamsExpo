@@ -1,9 +1,14 @@
+import { observer } from "mobx-react-lite";
 import React, { FC, useEffect, useState } from "react"
 import { View, Text, Button } from "react-native"
+import { useStore } from "../../../context/StoreProvider";
 import TimerFormattedTime from "../../../interfaces/TimerFormattedTime";
 import TimerDisplay from "./TimeDisplay";
 
 const TimerScreen: FC = () => {
+    const { cardStore } = useStore();
+    const { setAllowCardCommit } = cardStore;
+
     const [timerActive, setTimerActive] = useState(false);
     const [remainingSecs, setRemainingSecs] = useState(120);
 
@@ -25,6 +30,7 @@ const TimerScreen: FC = () => {
         }
         else if (!timerActive && remainingSecs == 0) clearInterval(interval);
         
+        setAllowCardCommit(timerActive);
         return () => {
             clearInterval(interval);
         }
@@ -33,8 +39,7 @@ const TimerScreen: FC = () => {
     return (
         <View>
             <Text>
-                {/* Secs Remaining: { remainingSecs } */}
-                <TimerDisplay formattedTime={ getFormattedTime(remainingSecs) }/>
+                <TimerDisplay formattedTime={getFormattedTime(remainingSecs)} />
             </Text>
             <Button
                 title={timerActive ? 'Strop' : 'Start'}
@@ -44,4 +49,4 @@ const TimerScreen: FC = () => {
     )
 }
 
-export default TimerScreen
+export default observer(TimerScreen);

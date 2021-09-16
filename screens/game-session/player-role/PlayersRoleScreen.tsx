@@ -10,7 +10,7 @@ interface Props{
 }
 
 const PlayersRoleScreen: FC<Props> = ({ navigation }) => {
-    const { cardStackNav } = screenNavigations;
+    const { gameRoundNav } = screenNavigations;
 
     const { playerStore } = useStore();
     const { 
@@ -42,7 +42,7 @@ const PlayersRoleScreen: FC<Props> = ({ navigation }) => {
 
             <Button
                 title='Start Game'
-                onPress={() => {navigation.navigate(cardStackNav.name)}}
+                onPress={() => {navigation.navigate(gameRoundNav.name)}}
             />
         </View>
     )

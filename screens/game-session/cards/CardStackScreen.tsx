@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 interface Props{
 }
 
-const CardStackScreen: FC = () => {
+const CardStackScreen: FC<Props> = () => {
     // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const { cardStore } = useStore();
     

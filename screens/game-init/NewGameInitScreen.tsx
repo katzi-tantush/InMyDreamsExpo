@@ -12,8 +12,8 @@ interface Props{
 }
 
 const NewGameInitScreen: FC<Props> = ({ navigation }) => {
-    const { playersRoleNav } = screenNavigations;
-    
+    const { playerRolesNav: playersRoleNav } = screenNavigations;
+
     return (
         <View>
             <PlayersInitScreen />
