@@ -6,13 +6,11 @@ import { Player } from "../../../models/Player";
 interface Props{
     player: Player
     editNameHandeler: Function
-    removePlayerHandeler: Function
 }
 
 const ExistingPlayerFormField: FC<Props> = ({
     player,
     editNameHandeler,
-    removePlayerHandeler
 }) => {
     const { name, id } = player
 
@@ -26,10 +24,6 @@ const ExistingPlayerFormField: FC<Props> = ({
                     setnameValue(text);
                     editNameHandeler(id, nameValue);
                 }}
-            />
-            <Button
-                title='Remove Player'
-                onPress={() => {removePlayerHandeler(id)}}
             />
         </View>
     )

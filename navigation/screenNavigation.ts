@@ -1,6 +1,5 @@
 import NewGameInitScreen from "../screens/game-init/NewGameInitScreen";
 import GameRoundScreen from "../screens/game-session/GameRoundScreen";
-import PlayersRoleScreen from "../screens/game-session/player-role/PlayersRoleScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 
 const screenNavigations = {
@@ -15,10 +14,6 @@ const screenNavigations = {
     gameRoundNav: {
         name: 'game round screen',
         component: GameRoundScreen
-    },
-    playerRolesNav: {
-        name: 'player roles',
-        component: PlayersRoleScreen
     }
 }
 
