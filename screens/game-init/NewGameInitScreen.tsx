@@ -1,6 +1,6 @@
 import { observer } from "mobx-react"
 import React, { FC } from "react"
-import { Button, View } from "react-native"
+import { Button, View, Text } from "react-native"
 import { useStore } from "../../context/StoreProvider"
 import { Player } from "../../models/Player"
 import screenNavigations from "../../navigation/screenNavigation"
@@ -12,17 +12,25 @@ interface Props{
 }
 
 const NewGameInitScreen: FC<Props> = ({ navigation }) => {
-    const { playerRolesNav: playersRoleNav } = screenNavigations;
+    const { getPlayerCount } = useStore().playerStore;
+    const { playerRolesNav } = screenNavigations;
 
     return (
         <View>
             <PlayersInitScreen />
-            <Button
-                title='To Player Roles'
-                onPress={() => {
-                    navigation.navigate(playersRoleNav.name);
-                }}
-            />
+            {
+                getPlayerCount() > 10 || getPlayerCount() < 4 ?
+                    <Text>
+                        Player count must be between 4-10!
+                    </Text>
+                    :
+                    <Button
+                        title='To Player Roles'
+                        onPress={() => {
+                            navigation.navigate(playerRolesNav.name);
+                        }}
+                    />
+            }
         </View>
     )
 }

@@ -50,6 +50,11 @@ export class PlayerStore {
         return newPlayersArr;
     }
 
+    @computed
+    getPlayerCount = ():number => {
+        return this.players.length;
+    }
+
     @action
     requestAddPlayer = (newPlayerName: string) => {
         const unTakenPlayerName: boolean = this.players.every(p => p.name != newPlayerName);

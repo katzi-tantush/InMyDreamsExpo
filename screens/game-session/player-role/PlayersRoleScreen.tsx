@@ -16,7 +16,7 @@ const PlayersRoleScreen: FC<Props> = ({ navigation }) => {
     const { 
         players, 
         dreamerIsSet,
-        initRoundRoles
+        initRoundRoles,
     } = playerStore;
 
     return (
@@ -31,19 +31,20 @@ const PlayersRoleScreen: FC<Props> = ({ navigation }) => {
                 </View>
             )}
 
-            <Text>
-                {
-                    dreamerIsSet() ?
-                        ''
-                        :
+            {
+                // verify that there is a dreamer and roles have been set
+                dreamerIsSet() ?
+                    // verify that player count is correct 
+                    <Button
+                        title='Start Game'
+                        onPress={() => { navigation.navigate(gameRoundNav.name) }}
+                    />
+                    :
+                    <Text>
                         'Please select a dreamer for this round'
-                }
-            </Text>
+                    </Text>
+            }
 
-            <Button
-                title='Start Game'
-                onPress={() => {navigation.navigate(gameRoundNav.name)}}
-            />
         </View>
     )
 }
