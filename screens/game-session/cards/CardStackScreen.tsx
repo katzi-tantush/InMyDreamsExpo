@@ -11,11 +11,14 @@ interface Props{
 }
 
 const CardStackScreen: FC<Props> = () => {
-    // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    const { cardStore } = useStore();
+    const { cardStore, timerStore } = useStore();
     
     const {
-        currentCard, 
+        secsRemaining
+    } = timerStore;
+    
+    const {
+        currentCard,
         commitCard
     } = cardStore;
     
@@ -26,32 +29,41 @@ const CardStackScreen: FC<Props> = () => {
         }
     }, [])
 
-    if (currentCard)
+
+    if (secsRemaining == 0) {
+        // TODO: implement take your time popup reminder
+    }
+
     return (
         <View>
-            <CardScreen card={currentCard as Card}></CardScreen>
-            <Button
-                title='swipte right - correct'
-                onPress={() => {
-                    commitCard(true, currentCard);
-                }}
-            />
-            <Button
-                title='swipte left - incorrect'
-                onPress={() => {
-                    commitCard(false, currentCard);
-                }}
-            />
-            <Button
-                title='swipte up - pass'
-                onPress={() => {
-                    commitCard();
-                }}
-            />
+            {
+                currentCard ?
+                    <View>
+
+                        <CardScreen card={currentCard as Card}></CardScreen>
+                        <Button
+                            title='swipte right - correct'
+                            onPress={() => {
+                                commitCard(true, currentCard);
+                            }}
+                        />
+                        <Button
+                            title='swipte left - incorrect'
+                            onPress={() => {
+                                commitCard(false, currentCard);
+                            }}
+                        />
+                        <Button
+                            title='swipte up - pass'
+                            onPress={() => {
+                                commitCard();
+                            }}
+                        />
+                    </View>
+                    :
+                    <Text> No cards left! </Text>
+            }
         </View>
-        )
-    return (
-        <Text> No cards left! </Text>
     )
 }
 

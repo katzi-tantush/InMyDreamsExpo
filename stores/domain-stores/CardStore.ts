@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, computed, makeAutoObservable, observable } from "mobx";
 import { dummyCards } from "../../dummy-data/dummyCards";
 import { Card } from "../../models/Card";
 import { Utils } from "../../Utils/Utils";
@@ -19,9 +19,6 @@ export class CardStore{
     @observable
     inCorrectCards: Card[];
 
-    @observable
-    allowCardCommit: boolean;
-
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
 
@@ -29,16 +26,10 @@ export class CardStore{
         this.setCards(dummyCards);
         this.setCurrentCard();
 
-        this.allowCardCommit = false;
         this.correctCards = [];
         this.inCorrectCards = [];
 
         makeAutoObservable(this);
-    }
-
-    @action
-    setAllowCardCommit = (shouldCommitBeAllowed:boolean) => {
-        this.allowCardCommit = shouldCommitBeAllowed;
     }
 
     @action
@@ -59,15 +50,20 @@ export class CardStore{
         this.setCurrentCard();
     }
 
+    @computed
+    permitCardCommit = (): boolean => {
+        return this.rootStore.timerStore.timerIsActive;
+    }
+
     @action
     commitCard = (correct?: boolean, currentCard?: Card) => {
-        if (this.allowCardCommit) {
+        if (this.permitCardCommit()) {
             if (correct === true) this.correctCards = [...this.correctCards, currentCard!];
             if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
             this.removeCard(currentCard?.id!)
         }
         else {
-            // implement start timer popup
+            // TODO: implement start timer popup
         }
     }
 }
