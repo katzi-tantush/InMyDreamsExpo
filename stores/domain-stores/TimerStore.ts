@@ -65,4 +65,10 @@ export class TimerStore {
         clearInterval(this.timerInterval);
         this.setTimerIsActive();
     }
+
+    // dev TODO: remove after dev
+    @action
+    forceTimerEnd = () => {
+        this.secsRemaining = 0;
+    }
 }

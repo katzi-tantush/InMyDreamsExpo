@@ -11,11 +11,7 @@ interface Props{
 }
 
 const CardStackScreen: FC<Props> = () => {
-    const { cardStore, timerStore } = useStore();
-    
-    const {
-        secsRemaining
-    } = timerStore;
+    const { cardStore } = useStore();
     
     const {
         currentCard,
@@ -28,11 +24,6 @@ const CardStackScreen: FC<Props> = () => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
         }
     }, [])
-
-
-    if (secsRemaining == 0) {
-        // TODO: implement take your time popup reminder
-    }
 
     return (
         <View>

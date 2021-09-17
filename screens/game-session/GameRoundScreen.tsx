@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
-import { View } from "react-native"
+import { Button, View } from "react-native"
+import { useStore } from "../../context/StoreProvider"
 import CardStackScreen from "./cards/CardStackScreen"
 import TimerScreen from "./timer/TimerScreen"
 
@@ -9,10 +10,24 @@ interface Props {
 }
 
 const GameRoundScreen: FC<Props> = ({ navigation }) => {
+    const { timerStore } = useStore();
+    const { secsRemaining, forceTimerEnd } = timerStore;
+
+    if (secsRemaining) {
+        alert('dev - take your time reminder popup');
+    }
+
     return (
         <View>
             <CardStackScreen />
-            <TimerScreen/>
+            <TimerScreen />
+            {/* dev TODO: remove after dev */}
+            <Button
+                title='Force Timer End'
+                onPress={() => {
+                    forceTimerEnd();
+                }}
+            />
         </View>
     )
 }
