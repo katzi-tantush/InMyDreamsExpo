@@ -6,7 +6,9 @@ export class TimerStore {
     rootStore: RootStore;
 
     roundSpanSecs: number;
-    
+
+    intervalId: number;
+
     @observable
     timerIsActive: boolean;
 
@@ -19,13 +21,14 @@ export class TimerStore {
         this.timerIsActive = false;
         this.roundSpanSecs = 120
         this.secsRemaining = this.roundSpanSecs;
+        this.intervalId = 0;
 
         makeAutoObservable(this);
     }
 
-    timerInterval: any = () => {
-        setInterval(() => {
-            this.secsRemaining = this.secsRemaining - 1;
+    timerInterval = () => {
+        return window.setInterval(() => {
+            this.decreaseRemainingSecs();
         }, 1000)
     }
 
@@ -47,22 +50,25 @@ export class TimerStore {
     }
 
     @action
-    decreaseTimerSecs = () => {
-        if (this.secsRemaining > 0) this.secsRemaining = this.secsRemaining - 1;
+    decreaseRemainingSecs = () => {
+        if (this.secsRemaining > 0) {
+            this.secsRemaining = this.secsRemaining - 1;
+        }
         if (this.secsRemaining == 0) {
-            clearInterval(this.timerInterval);
+            clearInterval(this.intervalId);
+            this.rootStore.gameSessionStore.SetShowTimerEndMsg(true);
         }
     }
 
     @action
     startTimer = () => {
-        this.timerInterval();
+        this.intervalId = this.timerInterval();
         this.setTimerIsActive();
     }
 
     @action
     stopTimer = () => {
-        clearInterval(this.timerInterval);
+        clearInterval(this.intervalId);
         this.setTimerIsActive();
     }
 

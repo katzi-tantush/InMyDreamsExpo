@@ -10,11 +10,15 @@ interface Props {
 }
 
 const GameRoundScreen: FC<Props> = ({ navigation }) => {
-    const { timerStore } = useStore();
-    const { secsRemaining, forceTimerEnd } = timerStore;
+    const { timerStore, gameSessionStore } = useStore();
+    const { forceTimerEnd } = timerStore;
+    const { showTimerEndMsg, SetShowTimerEndMsg } = gameSessionStore;
 
-    if (secsRemaining) {
-        alert('dev - take your time reminder popup');
+    // dev TODO: make a better component for this -
+    if (showTimerEndMsg) {
+        SetShowTimerEndMsg(
+            confirm('dev - take your time reminder popup')
+            )
     }
 
     return (
