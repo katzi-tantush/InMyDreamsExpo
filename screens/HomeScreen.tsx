@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Button, Text, View } from "react-native";
-import screenNavigations from "../navigation/screenNavigation";
+import screenNavigations from "../constants/screenNavigation";
 
 interface Props{
     navigation: any

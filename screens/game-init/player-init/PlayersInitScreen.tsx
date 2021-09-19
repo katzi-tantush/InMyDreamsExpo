@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import React, { FC } from "react";
 import { Button, View, Text } from "react-native";
+import { roles } from "../../../constants/roles";
 import { useStore } from "../../../context/StoreProvider";
 import AddNewPlayerScreen from "./AddNewPlayerScreen";
 import ExistingPlayerFormField from "./ExistingPlayerFormField";
@@ -8,9 +9,10 @@ import { PlayerGameInfo } from "./PlayerGameInfo";
 
 const PlayersInitScreen: FC = () => {
     const { playerStore } = useStore();
+    const { dreamer } = roles;
     
     const { 
-        editPlayer,
+        editPlayerName: editPlayer,
         removePlayer,
         requestAddPlayer,
         initRoundRoles,
@@ -29,7 +31,7 @@ const PlayersInitScreen: FC = () => {
                     />
                     <PlayerGameInfo role={p.role} score={p.score} />
                     <Button
-                        title='Set Dreamer'
+                        title={`Set ${dreamer}`}
                         onPress={() => initRoundRoles(p.id)}
                     />
 

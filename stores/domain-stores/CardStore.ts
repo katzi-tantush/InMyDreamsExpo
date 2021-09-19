@@ -60,7 +60,10 @@ export class CardStore{
         if (this.permitCardCommit()) {
             if (correct === true) this.correctCards = [...this.correctCards, currentCard!];
             if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
-            this.removeCard(currentCard?.id!)
+            this.removeCard(currentCard?.id!);
+            if (this.rootStore.timerStore.secsRemaining == 0) {
+                this.rootStore.gameRoundStore.setLastCardCommited(true);
+            }
         }
         else {
             // TODO: implement start timer popup

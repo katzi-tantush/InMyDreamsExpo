@@ -56,7 +56,7 @@ export class TimerStore {
         }
         if (this.secsRemaining == 0) {
             clearInterval(this.intervalId);
-            this.rootStore.gameSessionStore.SetShowTimerEndMsg(true);
+            this.rootStore.gameRoundStore.SetShowTimerEndMsg(true);
         }
     }
 
