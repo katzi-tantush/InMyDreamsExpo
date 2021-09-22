@@ -5,7 +5,7 @@ import { RootStore } from "../RootStore";
 export class TimerStore {
     rootStore: RootStore;
 
-    roundSpanSecs: number;
+    defaultRoundSecs: number;
 
     intervalId: number;
 
@@ -19,8 +19,8 @@ export class TimerStore {
         this.rootStore = _rootStore;
 
         this.timerIsActive = false;
-        this.roundSpanSecs = 120
-        this.secsRemaining = this.roundSpanSecs;
+        this.defaultRoundSecs = 120
+        this.secsRemaining = this.defaultRoundSecs;
         this.intervalId = 0;
 
         makeAutoObservable(this);
@@ -28,7 +28,9 @@ export class TimerStore {
 
     timerInterval = () => {
         return window.setInterval(() => {
-            this.decreaseRemainingSecs();
+            if (this.secsRemaining > 0) {
+                this.setSecsRemaining();
+            }
         }, 1000)
     }
 
@@ -45,31 +47,44 @@ export class TimerStore {
     }
 
     @action
-    setTimerIsActive = () => {
-        this.timerIsActive = !this.timerIsActive;
+    setTimerIsActive = (active: boolean) => {
+        this.timerIsActive = active;
     }
 
     @action
-    decreaseRemainingSecs = () => {
-        if (this.secsRemaining > 0) {
+    setSecsRemaining = (newSecsRemaining?: number) => {
+        if (newSecsRemaining) {
+            this.secsRemaining = newSecsRemaining;
+        }
+        else {
             this.secsRemaining = this.secsRemaining - 1;
         }
-        if (this.secsRemaining == 0) {
-            clearInterval(this.intervalId);
-            this.rootStore.gameRoundStore.SetShowTimerEndMsg(true);
-        }
+
+        // if (this.secsRemaining > 0) {
+        //     this.secsRemaining = this.secsRemaining - 1;
+        // }
+        // if (this.secsRemaining == 0) {
+        //     clearInterval(this.intervalId);
+        //     this.rootStore.gameRoundStore.SetShowTimerEndMsg(true);
+        // }
     }
 
     @action
     startTimer = () => {
         this.intervalId = this.timerInterval();
-        this.setTimerIsActive();
+        this.setTimerIsActive(true);
     }
 
     @action
     stopTimer = () => {
         clearInterval(this.intervalId);
-        this.setTimerIsActive();
+        this.setTimerIsActive(false);
+    }
+
+    @action
+    resetTimer = () => {
+        this.stopTimer();
+        this.setSecsRemaining(this.defaultRoundSecs);
     }
 
     // dev TODO: remove after dev

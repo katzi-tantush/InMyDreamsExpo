@@ -1,4 +1,5 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, computed, makeAutoObservable, observable } from "mobx";
+import { roles } from "../../constants/roles";
 import { Player } from "../../models/Player";
 import { RootStore } from "../RootStore";
 
@@ -6,50 +7,100 @@ export class GameRoundStore {
     rootStore: RootStore;
 
     @observable
-    showTimerEndMsg: Boolean;
+    roundTimeOver: Boolean;
 
     @observable
     lastCardCommited: boolean;
 
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
-        this.showTimerEndMsg = false;
+        this.roundTimeOver = false;
         this.lastCardCommited = false;
 
         makeAutoObservable(this);
     }
 
     @action
-    SetShowTimerEndMsg = (show: boolean) => {
-        this.showTimerEndMsg = show;
+    setRoundTimeOver = (timerHasFinished: boolean) => {
+        this.roundTimeOver = timerHasFinished;
     }
 
     @action
-    setLastCardCommited = (commited: boolean) => {
+    setLastCardCommitted = (commited: boolean) => {
         this.lastCardCommited = commited;
+    }
+
+    @computed
+    getDreamerFairyPoints = (): number => {
+        return this.rootStore.cardStore.correctCards.length;
+    }
+
+    @computed
+    getNightGoblinPoints = (): number => {
+        return this.rootStore.cardStore.inCorrectCards.length;
+    }
+
+    @computed
+    getTricksterPoints = (): number => {
+        let score: number;
+
+        let fairyPoints: number = this.getDreamerFairyPoints();
+        let nightGoblinPoints: number = this.getNightGoblinPoints();
+
+        let pointsDiff: number = Math.abs(fairyPoints - nightGoblinPoints);
+
+        switch (pointsDiff) {
+            case 0:
+                score = fairyPoints + 2;
+                break;
+            case 1:
+                score = fairyPoints > nightGoblinPoints ? fairyPoints : nightGoblinPoints;
+                break;
+            default:
+                score = fairyPoints < nightGoblinPoints ? fairyPoints : nightGoblinPoints;
+        }
+        return score;
     }
 
     @action
     settleScores = () => {
-        const { correctCards, inCorrectCards } = this.rootStore.cardStore;
+        const { addPointsToPlayerScore, players } = this.rootStore.playerStore;
 
-        let fairyScore: number = correctCards.length;
-        let nightGoblinScores: number = inCorrectCards.length;
-        let scoreDiff: number = Math.abs(fairyScore - nightGoblinScores);
+        console.log(`in GameRoundStore - settleScores. players: ${JSON.stringify(players)}`);
+        
 
-        let tricksterScores: number;
+        players.forEach(p => {
+            let pointsToAdd: number;
+            console.log(`in GameRoundStore - settleScores. role: ${p.role}`);
 
-        switch (scoreDiff) {
-            case 0:
-                tricksterScores = fairyScore + 2;
-                break;
-            case 1:
-                tricksterScores = fairyScore > nightGoblinScores ? fairyScore : nightGoblinScores;
-                break;
-            default:
-                tricksterScores = fairyScore < nightGoblinScores ? fairyScore : nightGoblinScores;
-        }
+            switch (p.role) {
+                case roles.nightGoblin:
+                    pointsToAdd = this.getNightGoblinPoints();
+                    break;
+                case roles.trickster:
+                    pointsToAdd = this.getTricksterPoints();
+                    break;
+                default:
+                    pointsToAdd = this.getDreamerFairyPoints();
+                    break;
+            }
 
-        const { getRoleFilteredPlayers, addPointsToPlayersScore, players } = this.rootStore.playerStore;
+            addPointsToPlayerScore(pointsToAdd, p);
+        })
+    }
+
+    @action
+    initRound = () => {
+        // TODO: if this stays empty just use it form the card store directly
+        this.setLastCardCommitted(false);
+        this.setRoundTimeOver(false);
+        this.rootStore.cardStore.emptyCommittedCards();
+    }
+    
+    @action
+    endRound = () => {
+        this.settleScores();
+        this.rootStore.timerStore.resetTimer();
+        this.rootStore.playerStore.emptyRoles();
     }
 }

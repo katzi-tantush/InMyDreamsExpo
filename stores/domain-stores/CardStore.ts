@@ -62,11 +62,17 @@ export class CardStore{
             if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
             this.removeCard(currentCard?.id!);
             if (this.rootStore.timerStore.secsRemaining == 0) {
-                this.rootStore.gameRoundStore.setLastCardCommited(true);
+                this.rootStore.gameRoundStore.setLastCardCommitted(true);
             }
         }
         else {
             // TODO: implement start timer popup
         }
+    }
+
+    @action
+    emptyCommittedCards = () => {
+        this.correctCards = [];
+        this.inCorrectCards = [];
     }
 }

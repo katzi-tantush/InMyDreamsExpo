@@ -48,10 +48,8 @@ export class PlayerStore {
     }
 
     @action
-    addPointsToPlayersScore = (points: number, _players: Player[]) => {
-        _players.forEach(p => {
-            p.score = p.score + points;
-        });
+    addPointsToPlayerScore = (points: number, player: Player) => {
+        player.score = player.score + points;
     }
 
     @computed
@@ -98,7 +96,6 @@ export class PlayerStore {
             return emptyRolePlayer;
         });
         
-        
         this.setPlayers([...emptyRolePlayers]);
     }
     
@@ -108,7 +105,6 @@ export class PlayerStore {
         const newRoundPlayers: Player[] = Utils.setRoles(this.players, dreamerId);
         
         this.setPlayers([...newRoundPlayers]);
-        console.log(`in playerStore, initRoundRoles - players: ${JSON.stringify(this.players)}`);
     }
 }
 

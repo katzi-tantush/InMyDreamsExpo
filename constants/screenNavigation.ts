@@ -1,7 +1,7 @@
 import NewGameInitScreen from "../screens/game-init/NewGameInitScreen";
-import GameRoundScreen from "../screens/game-session/GameRoundScreen";
+import GameRoundScreen from "../screens/game-session/round/GameRoundScreen";
 import { HomeScreen } from "../screens/HomeScreen";
-import RoundSummaryScreen from "../screens/game-session/RoundSummary"
+import RoundSummaryScreen from "../screens/game-session/round/RoundSummaryScreen"
 
 const screenNavigations = {
     homeNav: {

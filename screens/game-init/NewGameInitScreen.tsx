@@ -12,16 +12,21 @@ interface Props{
 const NewGameInitScreen: FC<Props> = ({ navigation }) => {
     const { playerStore,gameRoundStore: gameSessionStore } = useStore();
     const { getPlayerCount, dreamerIsSet, getRoleFilteredPlayers } = playerStore;
-    const { setLastCardCommited } = gameSessionStore;
+    const { initRound } = gameSessionStore;
     const { gameRoundNav } = screenNavigations;
 
     const playerCount: number = getPlayerCount();
+    const playersWithoutRolesCount: number = getRoleFilteredPlayers('').length;
 
     return (
         <View>
             <PlayersInitScreen />
             {
-                dreamerIsSet() ?
+                playersWithoutRolesCount > 0 ?
+                    <Text>
+                        Not all players have a role - please select a dreamer to distribute roles
+                    </Text>
+                    :
                     playerCount > 10 || playerCount < 4 ?
                         <Text>
                             Player count must be between 4-10!
@@ -30,19 +35,10 @@ const NewGameInitScreen: FC<Props> = ({ navigation }) => {
                         <Button
                             title='Start Game'
                             onPress={() => {
-                                if (getRoleFilteredPlayers('').length > 0) {
-                                    // TODO: implement not all players have roles popup/warning
-                                }
-                                else {
-                                    setLastCardCommited(false);
-                                    navigation.navigate(gameRoundNav.name);
-                                }
+                                initRound();
+                                navigation.navigate(gameRoundNav.name);
                             }}
                         />
-                    :
-                    <Text>
-                        Please choose a dreamer to continue
-                    </Text>
             }
         </View>
     )

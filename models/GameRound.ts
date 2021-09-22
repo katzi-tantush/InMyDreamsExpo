@@ -1,6 +1,6 @@
 import { Card } from "./Card";
 
-export class GameRound{
+export class GameRound {
     dreamerId: number;
     fairyIds: number[];
     nightGoblinIds: number[];
