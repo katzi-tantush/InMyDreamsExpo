@@ -1,6 +1,5 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
 import { roles } from "../../constants/roles";
-import { Player } from "../../models/Player";
 import { RootStore } from "../RootStore";
 
 export class GameRoundStore {
@@ -10,12 +9,12 @@ export class GameRoundStore {
     roundTimeOver: Boolean;
 
     @observable
-    lastCardCommited: boolean;
+    lastCardWasCommited: boolean;
 
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
         this.roundTimeOver = false;
-        this.lastCardCommited = false;
+        this.lastCardWasCommited = false;
 
         makeAutoObservable(this);
     }
@@ -26,8 +25,8 @@ export class GameRoundStore {
     }
 
     @action
-    setLastCardCommitted = (commited: boolean) => {
-        this.lastCardCommited = commited;
+    setLastCardWasCommitted = (commited: boolean) => {
+        this.lastCardWasCommited = commited;
     }
 
     @computed
@@ -67,7 +66,6 @@ export class GameRoundStore {
         const { addPointsToPlayerScore, players } = this.rootStore.playerStore;
 
         console.log(`in GameRoundStore - settleScores. players: ${JSON.stringify(players)}`);
-        
 
         players.forEach(p => {
             let pointsToAdd: number;
@@ -92,7 +90,7 @@ export class GameRoundStore {
     @action
     initRound = () => {
         // TODO: if this stays empty just use it form the card store directly
-        this.setLastCardCommitted(false);
+        this.setLastCardWasCommitted(false);
         this.setRoundTimeOver(false);
         this.rootStore.cardStore.emptyCommittedCards();
     }

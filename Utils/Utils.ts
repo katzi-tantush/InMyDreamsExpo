@@ -1,6 +1,6 @@
 import { roles } from "../constants/roles";
 import { Player } from "../models/Player";
-
+import uuid from 'react-native-uuid';
 class RoleCount {
     role: string;
     count: number;
@@ -50,6 +50,11 @@ export class Utils {
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
+    // generate a random uuid
+    static getUuid = () => {
+        return uuid.v4();
+    }
+    
     // TODO: move this to apropriate call
     static setRoles = (playersArr: Player[], nextDreamerId: number): Player[] => {
 

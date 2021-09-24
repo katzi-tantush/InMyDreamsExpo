@@ -15,7 +15,7 @@ const GameRoundScreen: FC<Props> = ({ navigation }) => {
 
     const { timerStore, gameRoundStore } = useStore();
     const { forceTimerEnd } = timerStore;
-    const { roundTimeOver, lastCardCommited, setRoundTimeOver, endRound } = gameRoundStore;
+    const { roundTimeOver, lastCardWasCommited: lastCardCommited, setRoundTimeOver, endRound } = gameRoundStore;
 
     if (lastCardCommited) {
         // TODO: implement 

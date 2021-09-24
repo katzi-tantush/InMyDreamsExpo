@@ -62,7 +62,7 @@ export class CardStore{
             if (correct === false) this.inCorrectCards = [...this.inCorrectCards, currentCard!];
             this.removeCard(currentCard?.id!);
             if (this.rootStore.timerStore.secsRemaining == 0) {
-                this.rootStore.gameRoundStore.setLastCardCommitted(true);
+                this.rootStore.gameRoundStore.setLastCardWasCommitted(true);
             }
         }
         else {
