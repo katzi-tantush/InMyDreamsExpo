@@ -1,15 +1,15 @@
 import { Card } from "./Card";
 
 export class GameRound {
-    dreamerId: number;
-    fairyIds: number[];
-    nightGoblinIds: number[];
-    tricksterIds: number[];
+    dreamerId: string;
+    fairyIds: string[];
+    nightGoblinIds: string[];
+    tricksterIds: string[];
 
     correctCards: Card[];
     incorrectCards: Card[];
 
-    constructor(_dreamerId:number, _fairyIds: number[], _nightGoblinIds:number[], _tricksterIds:number[]) {
+    constructor(_dreamerId:string, _fairyIds: string[], _nightGoblinIds:string[], _tricksterIds:string[]) {
         this.dreamerId = _dreamerId;
         this.fairyIds = _fairyIds;
         this.nightGoblinIds = _nightGoblinIds;

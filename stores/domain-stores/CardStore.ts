@@ -1,5 +1,4 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
-import { dummyCards } from "../../dummy-data/dummyCards";
 import { Card } from "../../models/Card";
 import { Utils } from "../../Utils/Utils";
 import { RootStore } from "../RootStore";
@@ -23,7 +22,7 @@ export class CardStore{
         this.rootStore = _rootStore;
 
         // dev:
-        this.setCards(dummyCards);
+        this.setCards(this.rootStore.cardStackStore.cardStacks[0].cards);
         this.setCurrentCard();
 
         this.correctCards = [];
@@ -45,7 +44,7 @@ export class CardStore{
     }
 
     @action
-    removeCard = (id:number) => {
+    removeCard = (id:string) => {
         this.cards = [...(this.cards as Card[]).filter(c => c.id != id)];
         this.setCurrentCard();
     }

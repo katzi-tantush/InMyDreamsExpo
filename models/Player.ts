@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 
 export class Player {
-    id: number;
+    id: string;
     name: string;
 
     @observable
@@ -10,7 +10,7 @@ export class Player {
     @observable
     role: string;
 
-    constructor(_id: number, _name?:string) {
+    constructor(_id: string, _name?:string) {
         this.id = _id;
         this.name = _name ? _name : `unnamed player ${_id}`;
         this.role = '';
