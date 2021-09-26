@@ -1,12 +1,20 @@
+import { useIsFocused } from "@react-navigation/core";
 import { observer } from "mobx-react-lite";
-import React, { FC } from "react";
-import { View } from "react-native";
+import React, { FC, useEffect, useState } from "react";
+import { Button, View } from "react-native";
+import screenNavigations from "../../constants/screenNavigation";
 import { useStore } from "../../context/StoreProvider";
 import CardStackItemScreen from "./CardStackItemScreen";
 
-const CardStackMenuScreen: FC = () => {
+interface Props {
+    navigation: any;
+}
+
+const CardStackMenuScreen: FC<Props> = ({ navigation }) => {
+    const { cardStackEditDetailsNav } = screenNavigations;
+    
     const { cardStackStore } = useStore();
-    const { cardStacks } = cardStackStore;
+    const { cardStacks, setSelectedCardStack } = cardStackStore;
 
     return (
         <View>
@@ -18,7 +26,18 @@ const CardStackMenuScreen: FC = () => {
             filter unwanted chars
             */}
 
-            {cardStacks.map(c => <CardStackItemScreen key={c.id} cardStack={c} />)}
+            {cardStacks.map(c => 
+            <View key={c.id}>
+                    <CardStackItemScreen cardStack={c} />
+                    <Button
+                        title='edit card stack'
+                        onPress={() => {
+                            setSelectedCardStack(c);
+                            navigation.navigate(cardStackEditDetailsNav.name);
+                        }}
+                    />
+            </View>
+            )}
             
             {/* TODO: 
             implement create card stack screens

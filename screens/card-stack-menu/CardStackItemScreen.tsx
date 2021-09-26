@@ -1,3 +1,4 @@
+import { observer } from "mobx-react";
 import React,{ FC } from "react";
 import { View, Text } from "react-native";
 import { CardStack } from "../../models/CardStack";
@@ -18,4 +19,4 @@ const CardStackItemScreen: FC<Props> = ({ cardStack }) => {
     )
 }
 
-export default CardStackItemScreen;
+export default observer(CardStackItemScreen);

@@ -11,7 +11,7 @@ export class CardStackStore {
     cardStacks: CardStack[];
 
     @observable
-    selectedCardStack: string | null;
+    selectedCardStack: CardStack | null;
 
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
@@ -19,6 +19,11 @@ export class CardStackStore {
         this.selectedCardStack = null;
 
         makeAutoObservable(this);
+    }
+
+    @action
+    setCardStacks = (_cardStacks: CardStack[]) => {
+        this.cardStacks = [..._cardStacks];
     }
 
     @action
@@ -37,13 +42,18 @@ export class CardStackStore {
     }
 
     @action
+    setSelectedCardStackName = (newName: string) => {
+        this.selectedCardStack!.name = newName;
+    }
+
+    @action
     setCardStackCards = (cardStackId: string, cards: Card[]) => {
         const cardStack: CardStack = this.getCardStackById(cardStackId);
         cardStack.cards = [...cards];
     }
 
     @action
-    setSelectedCardStack = (cardStackId: string) => {
-        this.selectedCardStack = cardStackId;
+    setSelectedCardStack = (cardStack: CardStack) => {
+        this.selectedCardStack = cardStack;
     }
 }

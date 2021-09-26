@@ -3,7 +3,7 @@ import GameRoundScreen from "../screens/game-session/round/GameRoundScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 import RoundSummaryScreen from "../screens/game-session/round/RoundSummaryScreen"
 import CardStackMenuScreen from "../screens/card-stack-menu/CardStackMenuScreen";
-import CardStackDetailsScreen from "../screens/card-stack-menu/CardStackDetailsScreen";
+import CardStackEditDetailsScreen from "../screens/card-stack-menu/CardStackEditDetailsScreen";
 
 const screenNavigations = {
     homeNav: {
@@ -26,9 +26,9 @@ const screenNavigations = {
         name: 'card Stack menu',
         component: CardStackMenuScreen
     },
-    cardStackDetailsNav: {
-        name: 'card stack details',
-        component: CardStackDetailsScreen
+    cardStackEditDetailsNav: {
+        name: 'card stack edit details',
+        component: CardStackEditDetailsScreen
     }
 }
 

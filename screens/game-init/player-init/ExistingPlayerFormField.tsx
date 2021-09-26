@@ -20,7 +20,7 @@ const ExistingPlayerFormField: FC<Props> = ({
         <View>
             <TextInput
                 value={nameValue}
-                onChangeText={(text) => {
+                onChangeText={text => {
                     setnameValue(text);
                     editNameHandeler(id, nameValue);
                 }}
