@@ -8,21 +8,19 @@ interface Props{
     editNameHandeler: Function
 }
 
-const ExistingPlayerFormField: FC<Props> = ({
-    player,
-    editNameHandeler,
-}) => {
+const ExistingPlayerFormField: FC<Props> = ({ player, editNameHandeler, }) => {
+    
     const { name, id } = player
 
-    const [nameValue, setnameValue] = useState(name);
+    const [nameVal, setnameValue] = useState(name);
 
     return (
         <View>
             <TextInput
-                value={nameValue}
-                onChangeText={text => {
-                    setnameValue(text);
-                    editNameHandeler(id, nameValue);
+                value={nameVal}
+                onChangeText={inputText => {
+                    setnameValue(inputText);
+                    editNameHandeler(id, nameVal);
                 }}
             />
         </View>

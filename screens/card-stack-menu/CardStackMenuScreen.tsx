@@ -1,6 +1,5 @@
-import { useIsFocused } from "@react-navigation/core";
 import { observer } from "mobx-react-lite";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Button, View } from "react-native";
 import screenNavigations from "../../constants/screenNavigation";
 import { useStore } from "../../context/StoreProvider";

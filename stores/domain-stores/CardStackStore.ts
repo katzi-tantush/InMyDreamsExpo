@@ -2,6 +2,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx";
 import { dummyStack } from "../../dummy-data/dummyCards";
 import { Card } from "../../models/Card";
 import { CardStack } from "../../models/CardStack";
+import { Factory } from "../../Utils/Factory";
 import { RootStore } from "../RootStore";
 
 export class CardStackStore {
@@ -32,6 +33,14 @@ export class CardStackStore {
     }
 
     @action
+    addCardToCardStack = (cardStackId: string, newCardText: string) => {
+        const newCard: Card = Factory.genCard(newCardText);
+
+        const cardStack: CardStack = this.getCardStackById(cardStackId);
+        cardStack.addCard(newCard);
+    }
+
+    @action
     deleteCardStack = (cardStackId: string) => {
         this.cardStacks = [...this.cardStacks.filter(c => c.id != cardStackId)];
     }
@@ -46,11 +55,11 @@ export class CardStackStore {
         this.selectedCardStack!.name = newName;
     }
 
-    @action
-    setCardStackCards = (cardStackId: string, cards: Card[]) => {
-        const cardStack: CardStack = this.getCardStackById(cardStackId);
-        cardStack.cards = [...cards];
-    }
+    // @action
+    // setCardStackCards = (cardStackId: string, cards: Card[]) => {
+    //     const cardStack: CardStack = this.getCardStackById(cardStackId);
+    //     cardStack.cards = [...cards];
+    // }
 
     @action
     setSelectedCardStack = (cardStack: CardStack) => {

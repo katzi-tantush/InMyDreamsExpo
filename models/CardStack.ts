@@ -1,10 +1,13 @@
-import { makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { Card } from "./Card";
 
 export class CardStack {
     id: string;
+
     @observable
     name: string;
+
+    @observable
     cards: Card[];
 
     constructor(_id: string, _name: string, _cards: Card[]) {
@@ -15,11 +18,13 @@ export class CardStack {
         makeAutoObservable(this);
     }
 
+    @action
     addCard = (newCard: Card) => {
         this.cards = [...this.cards, newCard];
     }
 
+    @action
     removeCard = (cardId: string) => {
-        this.cards = [...this.cards.filter(c => c.id == cardId)];
+        this.cards = [...this.cards.filter(c => c.id != cardId)];
     }
 }
