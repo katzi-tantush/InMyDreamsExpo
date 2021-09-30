@@ -11,7 +11,7 @@ interface Props{
 }
 
 const CardStackScreen: FC<Props> = () => {
-    const { cardStore } = useStore();
+    const { roundCardsStore: cardStore } = useStore();
     
     const {
         currentCard,

@@ -2,6 +2,7 @@ import { action, computed, makeAutoObservable, observable } from "mobx";
 import { roles } from "../../constants/roles";
 import { dummyPlayers } from "../../dummy-data/dummyPlayers";
 import { Player } from "../../models/Player";
+import { Factory } from "../../Utils/Factory";
 import { Utils } from "../../Utils/Utils";
 import { RootStore } from "../RootStore";
 
@@ -37,12 +38,12 @@ export class PlayerStore {
     }
 
     @action
-    removePlayer = (id: number) => {
+    removePlayer = (id: string) => {
         this.players = [...this.getIdFilteredPlayers(id)]
     }
 
     @action
-    editPlayerName = (id: number, edittedName: string) => {
+    editPlayerName = (id: string, edittedName: string) => {
         let player: Player = this.players.find(p => p.id == id) as Player;
         player.name = edittedName;
     }
@@ -53,7 +54,7 @@ export class PlayerStore {
     }
 
     @computed
-    getIdFilteredPlayers = (id: number): Player[] => {
+    getIdFilteredPlayers = (id: string): Player[] => {
         const newPlayersArr: Player[] = [...this.players.filter(p => p.id !== id)];
         return newPlayersArr;
     }
@@ -79,11 +80,7 @@ export class PlayerStore {
             // implement bad name msg
         }
         else {
-            const newId: number = this.players.reduce(
-                (acc, cur) => { return (acc > cur ? acc : cur) }
-            ).id + 1;
-
-            const newPlayer: Player = new Player(newId, newPlayerName);
+            const newPlayer: Player = Factory.genPlayer(newPlayerName);
             this.addPlayer(newPlayer);
         }
     }
@@ -100,7 +97,7 @@ export class PlayerStore {
     }
     
     @action
-    initRoundRoles = (dreamerId: number) => {
+    initRoundRoles = (dreamerId: string) => {
         this.emptyRoles();
         const newRoundPlayers: Player[] = Utils.setRoles(this.players, dreamerId);
         

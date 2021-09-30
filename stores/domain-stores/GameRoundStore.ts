@@ -1,5 +1,6 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
 import { roles } from "../../constants/roles";
+import { CardStack } from "../../models/CardStack";
 import { RootStore } from "../RootStore";
 
 export class GameRoundStore {
@@ -31,12 +32,12 @@ export class GameRoundStore {
 
     @computed
     getDreamerFairyPoints = (): number => {
-        return this.rootStore.cardStore.correctCards.length;
+        return this.rootStore.roundCardsStore.correctCards.length;
     }
 
     @computed
     getNightGoblinPoints = (): number => {
-        return this.rootStore.cardStore.inCorrectCards.length;
+        return this.rootStore.roundCardsStore.inCorrectCards.length;
     }
 
     @computed
@@ -88,11 +89,17 @@ export class GameRoundStore {
     }
 
     @action
+    setSessionCards = (cardStack: CardStack) => {
+        let { cards } = this.rootStore.roundCardsStore;
+        cards = cardStack.cloneCards();
+    }
+
+    @action
     initRound = () => {
         // TODO: if this stays empty just use it form the card store directly
         this.setLastCardWasCommitted(false);
         this.setRoundTimeOver(false);
-        this.rootStore.cardStore.emptyCommittedCards();
+        this.rootStore.roundCardsStore.emptyCommittedCards();
     }
     
     @action

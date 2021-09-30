@@ -7,7 +7,7 @@ interface Props{
 }
 
 export const HomeScreen: FC<Props> = ({ navigation }) => {
-    const { gameInitNav, cardStackMenuNav } = screenNavigations;
+    const { sessionCardStackSelectNav, cardStackMenuNav } = screenNavigations;
 
     return (
         <View>
@@ -19,8 +19,8 @@ export const HomeScreen: FC<Props> = ({ navigation }) => {
                 onPress={() => {navigation.navigate(cardStackMenuNav.name)}}
             />
             <Button
-                title='To Game Init Screen'
-                onPress={() => { navigation.navigate(gameInitNav.name) }} />
+                title='To Game Session Card Stack Selection'
+                onPress={() => { navigation.navigate(sessionCardStackSelectNav.name) }} />
         </View>
     )
 }

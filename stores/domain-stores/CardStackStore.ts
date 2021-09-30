@@ -1,5 +1,5 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
-import { dummyStack } from "../../dummy-data/dummyCards";
+import { dummyStacks } from "../../dummy-data/dummyCards";
 import { Card } from "../../models/Card";
 import { CardStack } from "../../models/CardStack";
 import { Factory } from "../../Utils/Factory";
@@ -16,9 +16,10 @@ export class CardStackStore {
 
     constructor(_rootStore: RootStore) {
         this.rootStore = _rootStore;
-        this.cardStacks = [dummyStack];
+        this.cardStacks = dummyStacks;
         this.selectedCardStack = null;
 
+        // console.log(`in cardStackStore, constructor -  dummyStacks: ${JSON.stringify(dummyStacks)}`);
         makeAutoObservable(this);
     }
 
@@ -33,16 +34,16 @@ export class CardStackStore {
     }
 
     @action
+    deleteCardStack = (cardStackId: string) => {
+        this.setCardStacks([...this.cardStacks.filter(c => c.id != cardStackId)]);
+    }
+
+    @action
     addCardToCardStack = (cardStackId: string, newCardText: string) => {
         const newCard: Card = Factory.genCard(newCardText);
 
         const cardStack: CardStack = this.getCardStackById(cardStackId);
         cardStack.addCard(newCard);
-    }
-
-    @action
-    deleteCardStack = (cardStackId: string) => {
-        this.cardStacks = [...this.cardStacks.filter(c => c.id != cardStackId)];
     }
 
     @computed
@@ -55,14 +56,15 @@ export class CardStackStore {
         this.selectedCardStack!.name = newName;
     }
 
-    // @action
-    // setCardStackCards = (cardStackId: string, cards: Card[]) => {
-    //     const cardStack: CardStack = this.getCardStackById(cardStackId);
-    //     cardStack.cards = [...cards];
-    // }
-
     @action
     setSelectedCardStack = (cardStack: CardStack) => {
         this.selectedCardStack = cardStack;
+    }
+
+    @action
+    initNewCardStack = () => {
+        const newCardStack: CardStack = Factory.genCardStack('');
+        this.setCardStacks([...this.cardStacks, newCardStack]);
+        this.setSelectedCardStack(newCardStack);
     }
 }

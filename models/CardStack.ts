@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, computed, makeAutoObservable, observable } from "mobx";
 import { Card } from "./Card";
 
 export class CardStack {
@@ -26,5 +26,10 @@ export class CardStack {
     @action
     removeCard = (cardId: string) => {
         this.cards = [...this.cards.filter(c => c.id != cardId)];
+    }
+
+    @computed
+    cloneCards = (): Card[] => {
+        return [...this.cards];
     }
 }

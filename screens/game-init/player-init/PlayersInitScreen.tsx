@@ -2,12 +2,19 @@ import { observer } from "mobx-react";
 import React, { FC } from "react";
 import { Button, View, Text } from "react-native";
 import { roles } from "../../../constants/roles";
+import screenNavigations from "../../../constants/screenNavigation";
 import { useStore } from "../../../context/StoreProvider";
 import AddNewPlayerScreen from "./AddNewPlayerScreen";
 import ExistingPlayerFormField from "./ExistingPlayerFormField";
 import { PlayerGameInfo } from "./PlayerGameInfo";
 
-const PlayersInitScreen: FC = () => {
+interface Props {
+    navigation: any;
+}
+
+const PlayersInitScreen: FC<Props> = ({ navigation }) => {
+    const { gameRoundNav } = screenNavigations;
+
     const { playerStore } = useStore();
     const { dreamer } = roles;
     
@@ -19,6 +26,8 @@ const PlayersInitScreen: FC = () => {
         getPlayerCount,
         players
     } = playerStore;
+
+    const playerCount = getPlayerCount();
 
     return (
         <View>
@@ -43,14 +52,23 @@ const PlayersInitScreen: FC = () => {
                 </View>
             )}
             {
-                getPlayerCount() <= 11 ?
+                playerCount <= 11 ?
                     <AddNewPlayerScreen
                         addPlayerHandeler={requestAddPlayer}
                     />
                     :
-                    <Text>
-
-                    </Text>
+                    {}
+            }
+            {
+                playerCount >= 4 ?
+                    <Button
+                        title='Start Round'
+                        onPress={() => {
+                            navigation.navigate(gameRoundNav.name);
+                        }}
+                    />
+                    :
+                    {}
             }
         </View>
     )

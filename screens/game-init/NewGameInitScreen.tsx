@@ -20,7 +20,7 @@ const NewGameInitScreen: FC<Props> = ({ navigation }) => {
 
     return (
         <View>
-            <PlayersInitScreen />
+            {/* <PlayersInitScreen />
             {
                 playersWithoutRolesCount > 0 ?
                     <Text>
@@ -39,7 +39,7 @@ const NewGameInitScreen: FC<Props> = ({ navigation }) => {
                                 navigation.navigate(gameRoundNav.name);
                             }}
                         />
-            }
+            } */}
         </View>
     )
 }

@@ -11,9 +11,9 @@ interface Props{
 }
 
 const RoundSummaryScreen: FC<Props> = ({ navigation }) => {
-    const { gameInitNav } = screenNavigations;
+    const { playersInitNav } = screenNavigations;
     
-    const { gameRoundStore, cardStore } = useStore();
+    const { gameRoundStore, roundCardsStore: cardStore } = useStore();
 
     const { 
         getDreamerFairyPoints, 
@@ -44,7 +44,7 @@ const RoundSummaryScreen: FC<Props> = ({ navigation }) => {
             <Button
                 title='Start New Round'
                 onPress={() => {
-                    navigation.navigate(gameInitNav.name);
+                    navigation.navigate(playersInitNav.name);
                 }}
             />
         </View>

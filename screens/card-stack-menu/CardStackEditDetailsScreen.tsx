@@ -19,7 +19,10 @@ const CardStackEditDetailsScreen: FC = () => {
         removeCard 
     } = selectedCardStack!;
 
-    const [nameValue, setNameValue] = useState(cardStackName)
+    const [nameValue, setNameValue] = useState(cardStackName);
+
+    console.log(`in CardStackEditDetailsScreen - selectedCardStack: ${JSON.stringify(selectedCardStack)}`);
+    
 
     return (
         <View>
