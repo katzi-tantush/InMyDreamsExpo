@@ -108,4 +108,10 @@ export class GameRoundStore {
         this.rootStore.timerStore.resetTimer();
         this.rootStore.playerStore.emptyRoles();
     }
+
+    @computed
+    allPlayerRolesSet = (): boolean => {
+        return this.rootStore.playerStore.players
+            .every(p => p.role !== '');
+    }
 }

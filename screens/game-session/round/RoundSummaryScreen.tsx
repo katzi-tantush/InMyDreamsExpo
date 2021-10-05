@@ -13,18 +13,19 @@ interface Props{
 const RoundSummaryScreen: FC<Props> = ({ navigation }) => {
     const { playersInitNav } = screenNavigations;
     
-    const { gameRoundStore, roundCardsStore: cardStore } = useStore();
+    const { gameRoundStore, roundCardsStore } = useStore();
 
     const { 
         getDreamerFairyPoints, 
         getNightGoblinPoints, 
         getTricksterPoints,
+        initRound
     } = gameRoundStore;
 
     const {
         correctCards,
         inCorrectCards
-    } = cardStore;
+    } = roundCardsStore;
 
     const { dreamer, fairy, nightGoblin, trickster } = roles;
 
@@ -44,6 +45,7 @@ const RoundSummaryScreen: FC<Props> = ({ navigation }) => {
             <Button
                 title='Start New Round'
                 onPress={() => {
+                    initRound();
                     navigation.navigate(playersInitNav.name);
                 }}
             />

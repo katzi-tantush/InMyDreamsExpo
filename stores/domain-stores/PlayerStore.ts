@@ -21,12 +21,6 @@ export class PlayerStore {
         makeAutoObservable(this);
     }
 
-    @computed
-    dreamerIsSet = (): boolean => {
-        let dreamer: Player | undefined = this.players.find(p => p.role == roles.dreamer);
-        return dreamer ? true : false;
-    }
-
     @action
     setPlayers = (newPlayersArr: Player[]) => {
         this.players = [...newPlayersArr];

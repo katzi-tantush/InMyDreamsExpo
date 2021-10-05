@@ -15,7 +15,7 @@ export const HomeScreen: FC<Props> = ({ navigation }) => {
                 Home Screen
             </Text>
             <Button
-                title='To Card Sack Menu Screen'
+                title='To Card Stack Menu Screen'
                 onPress={() => {navigation.navigate(cardStackMenuNav.name)}}
             />
             <Button
