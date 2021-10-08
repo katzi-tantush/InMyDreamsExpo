@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { FC, useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import { useStore } from "../../context/StoreProvider";
+import PlayerInpurErrModal from "../shared/PlayerInpurErrModal";
 import AddNewCardScreen from "./card-edit/AddNewCardScreen";
 import CardEditScreen from "./card-edit/CardEditScreen";
 
@@ -10,7 +11,6 @@ const CardStackEditDetailsScreen: FC = () => {
     const { 
         selectedCardStack, 
         setSelectedCardStackName, 
-        addCardToCardStack 
     } = cardStackStore;
 
     const { 
@@ -21,11 +21,9 @@ const CardStackEditDetailsScreen: FC = () => {
 
     const [nameValue, setNameValue] = useState(cardStackName);
 
-    console.log(`in CardStackEditDetailsScreen - selectedCardStack: ${JSON.stringify(selectedCardStack)}`);
-    
-
     return (
         <View>
+            <PlayerInpurErrModal/>
             <Text>
                 Card Stack Title:
                 <TextInput
@@ -51,8 +49,13 @@ const CardStackEditDetailsScreen: FC = () => {
                 </View>
             )}
             <AddNewCardScreen
-                selectedCardStackId={selectedCardStack?.id!}
-                addCardHandeler={addCardToCardStack}
+                addCardHandeler={selectedCardStack?.addCard!}
+            />
+            <Button
+                title='Add Card Stack'
+                onPress={() => {
+                    // TODO: implement local storage to store saved card stacks
+                }}
             />
         </View>
     )

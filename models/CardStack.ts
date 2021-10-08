@@ -1,4 +1,5 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
+import { Factory } from "../Utils/Factory";
 import { Card } from "./Card";
 
 export class CardStack {
@@ -19,7 +20,9 @@ export class CardStack {
     }
 
     @action
-    addCard = (newCard: Card) => {
+    addCard = (cardText: string) => {
+
+        let newCard: Card = Factory.genCard(cardText);
         this.cards = [...this.cards, newCard];
     }
 

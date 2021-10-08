@@ -1,38 +1,24 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useEffect, useState } from "react"
 import {  Button, TextInput, View } from "react-native"
+import { PlayerInputException } from "../../../constants/exceptions/PlayerInputException";
 import { useStore } from "../../../context/StoreProvider";
 import { Card } from "../../../models/Card";
+import { defaultInputErrs } from "../../../stores/ui-stores/InputErrModalStore";
 import { Factory } from "../../../Utils/Factory";
+import { Validator } from "../../../Utils/Validator";
 
 interface Props {
     addCardHandeler: Function;
-    selectedCardStackId: string;
 }
 
-const AddNewCardScreen: FC<Props> = ({ selectedCardStackId, addCardHandeler }) => {
+const AddNewCardScreen: FC<Props> = ({ addCardHandeler }) => {
+    const { inputErrModalStore } = useStore();
+    const { setShowModal, addErr, removeErr } = inputErrModalStore;
 
-    // const { cardStackStore } = useStore();
-    // const { selectedCardStack, setCardStackCards } = cardStackStore;
-    // const { id, cards } = selectedCardStack!;
-    
+    const { inValidCardText } = defaultInputErrs;
 
     const [cardTextVal, setCardTextVal] = useState<string>('');
-
-    // let newCard: Card;
-    
-    // useEffect(() => {
-    //     if (newCard) {
-    //         newCard.setText(cardTextVal);
-    //     }
-    //     if (cardTextVal.length == 1) {
-    //         newCard = Factory.genCard(cardTextVal);
-    //     }
-    //     return () => {
-
-    //     }
-    // }, [cardTextVal])
-    
 
     return (
         <View>
@@ -46,11 +32,21 @@ const AddNewCardScreen: FC<Props> = ({ selectedCardStackId, addCardHandeler }) =
             <Button
                 title='Add New Card To Stack'
                 onPress={() => {
-                    // if (newCard) {
-                        // add(id, [...cards, newCard]);
-                    addCardHandeler(selectedCardStackId, cardTextVal);
-                    setCardTextVal('');
-                    // }
+                    try {
+                        if (!Validator.validCardText(cardTextVal)) {
+                            throw new PlayerInputException('card text must be at least 2 characters long');
+                        }
+
+                        addCardHandeler(cardTextVal);
+                        setCardTextVal('');
+
+                        removeErr(inValidCardText.type);
+                    } catch (e) {
+                        console.log(e);
+                        
+                        addErr(inValidCardText);
+                        setShowModal(true);
+                    }
                 }}
             />
         </View>

@@ -13,7 +13,11 @@ export default function App() {
     <StoreProvider store={rootStore}>
 
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          // screenOptions={{
+          //    headerLeft: null
+          // }}
+        >
           {
             Object.values(screenNavigations).map(screenNav => <Stack.Screen
               key={screenNav.name}
@@ -24,7 +28,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
       
-    </StoreProvider>
+    </StoreProvider>  
   );
 }
 

@@ -38,14 +38,6 @@ export class CardStackStore {
         this.setCardStacks([...this.cardStacks.filter(c => c.id != cardStackId)]);
     }
 
-    @action
-    addCardToCardStack = (cardStackId: string, newCardText: string) => {
-        const newCard: Card = Factory.genCard(newCardText);
-
-        const cardStack: CardStack = this.getCardStackById(cardStackId);
-        cardStack.addCard(newCard);
-    }
-
     @computed
     getCardStackById = (cardStackId: string): CardStack => {
         return this.cardStacks.find(c => c.id == cardStackId)!;
@@ -64,7 +56,6 @@ export class CardStackStore {
     @action
     initNewCardStack = () => {
         const newCardStack: CardStack = Factory.genCardStack('');
-        this.setCardStacks([...this.cardStacks, newCardStack]);
         this.setSelectedCardStack(newCardStack);
     }
 }

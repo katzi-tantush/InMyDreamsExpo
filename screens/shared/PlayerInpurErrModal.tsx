@@ -1,3 +1,4 @@
+import { observer } from "mobx-react";
 import React, { FC } from "react";
 import { Button, Modal, View, Text } from "react-native";
 import { useStore } from "../../context/StoreProvider";
@@ -32,3 +33,5 @@ const PlayerInpurErrModal: FC = () => {
         </Modal>
     )
 }
+
+export default observer(PlayerInpurErrModal);

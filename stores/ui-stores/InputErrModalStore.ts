@@ -1,20 +1,21 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import { RootStore } from "../RootStore";
 
-export const inputErrTypes = {
-    playerCount: 'player count',
-    unSetRoles: 'un-set roles'
-}
-
 export class InputErr {
     type: string;
     msg: string;
-
-
+    
+    
     constructor(errType: string, errMsg: string) {
         this.type = errType;
         this.msg = errMsg;
     }
+}
+
+export const defaultInputErrs = {
+    playerCount: new InputErr('player count', ''),
+    unSetRoles: new InputErr('un-set roles', ''),
+    inValidCardText: new InputErr('in-valid card text', '')
 }
 
 export class InputErrModalStore {
@@ -40,8 +41,10 @@ export class InputErrModalStore {
     }
 
     @action
-    addErr = (newErr: InputErr) => {
-        this.inputErrors = [...this.inputErrors, newErr];
+    addErr = (inputErr: InputErr) => {
+        if (this.inputErrors.every(e => e.type !== inputErr.type)) {
+            this.inputErrors = [...this.inputErrors, inputErr];
+        }
     }
 
     @action
